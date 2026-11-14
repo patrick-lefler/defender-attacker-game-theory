@@ -1,5 +1,222 @@
 [
   {
+    "objectID": "license.html",
+    "href": "license.html",
+    "title": "MIT License",
+    "section": "",
+    "text": "Copyright (c) 2026 Patrick Lefler\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+  },
+  {
+    "objectID": "03-robustness.html",
+    "href": "03-robustness.html",
+    "title": "Misreading the Attacker",
+    "section": "",
+    "text": "All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative.",
+    "crumbs": [
+      "Robustness"
+    ]
+  },
+  {
+    "objectID": "03-robustness.html#why-the-textbook-answer-is-fragile",
+    "href": "03-robustness.html#why-the-textbook-answer-is-fragile",
+    "title": "Misreading the Attacker",
+    "section": "Why the textbook answer is fragile",
+    "text": "Why the textbook answer is fragile\nThe textbook equilibrium works by making the crew exactly indifferent across 5 targets. That razor’s edge is what makes the plan efficient, and also what makes it brittle: when the crew’s real payoffs differ from our estimates, the crew steps off the edge toward the target we left weakest.",
+    "crumbs": [
+      "Robustness"
+    ]
+  },
+  {
+    "objectID": "03-robustness.html#misjudged-payoffs",
+    "href": "03-robustness.html#misjudged-payoffs",
+    "title": "Misreading the Attacker",
+    "section": "Misjudged payoffs",
+    "text": "Misjudged payoffs\nWe drew 3,000 versions of the crew. In each, every success payoff is multiplied by a random error (lognormal, sigma = 0.35). Every strategy faces the same draws.\n\n\nCode\nord &lt;- ms$strategy[order(ms$mean)]\nhits &lt;- draws |&gt;\n  summarise(n = n(), loss = first(loss), .by = c(strategy, target)) |&gt;\n  mutate(share = n / sum(n), .by = strategy) |&gt;\n  mutate(strategy = factor(strategy, levels = rev(ord)),\n         asset = factor(ASSET_SHORT[target], levels = ASSET_SHORT)) |&gt;\n  arrange(strategy, asset) |&gt;\n  mutate(xmid = cumsum(share) - share / 2, .by = strategy)\ncallout &lt;- hits |&gt; filter(target == \"PIPE\", share &gt;= 0.03)   # rare but costly hits\n\nshare_of &lt;- \\(s, a) sum(hits$share[hits$strategy == s & hits$target == a])\nrb_corp  &lt;- share_of(\"robust\", \"CORP\")\ntb_pipe  &lt;- share_of(\"textbook\", \"PIPE\")\n\nggplot(hits, aes(x = share, y = strategy, fill = asset)) +\n  geom_col(width = 0.7, color = \"white\", linewidth = 0.3,\n           position = position_stack(reverse = TRUE)) +\n  geom_text(aes(label = ifelse(share &gt;= 0.08, fmt_m(loss), \"\")),\n            position = position_stack(vjust = 0.5, reverse = TRUE), size = 3, color = \"white\") +\n  geom_text(data = callout, aes(x = xmid, y = strategy, label = fmt_m(loss)),\n            inherit.aes = FALSE, nudge_y = 0.48, size = 3, color = \"#2E7D6B\", fontface = \"bold\") +\n  scale_x_continuous(labels = scales::percent, expand = expansion(mult = c(0, 0.01))) +\n  scale_y_discrete(labels = STRAT_LABELS) +\n  scale_fill_manual(values = ASSET_COLS, name = NULL, drop = FALSE) +\n  guides(fill = guide_legend(nrow = 1)) +\n  labs(x = \"Share of simulated crews\", y = NULL,\n       title = \"Where the crew strikes when we misjudge it\",\n       subtitle = \"Labels show our loss if that asset is hit\") +\n  theme(legend.position = \"top\", panel.grid.major.y = element_blank())\n\n\n\n\n\n\n\n\nFigure 1: Where simulated crews strike under each strategy when their payoffs differ from our estimate. Labels show our loss if that asset is hit.\n\n\n\n\n\n\nHow to read the plot. Each bar is one strategy, ordered from lowest average loss (top) to highest. The colored segments show the share of simulated crews that attack each asset, and the label is what that attack would cost us.\nWhat the plot tells you. Robust funnels 68% of crews onto corporate IT, a cheap hit. The textbook plan scatters them across all six assets, and about one crew in 18 reaches the pipeline, a $46.5M loss.\n\n\n\nCode\nms |&gt;\n  arrange(mean) |&gt;\n  transmute(Strategy = STRAT_LABELS[strategy], mean, p50, p95, p99,\n            Hit = sprintf(\"%s (%s)\", ASSET_SHORT[top_target], fmt_pct(top_share))) |&gt;\n  gt() |&gt;\n  cols_label(mean = \"Mean\", p50 = \"Median\", p95 = \"95th pct.\", p99 = \"99th pct.\", Hit = \"Most-hit asset\") |&gt;\n  tab_spanner(\"Loss ($M)\", columns = c(mean, p50, p95, p99)) |&gt;\n  fmt_number(columns = c(mean, p50, p95, p99), decimals = 1) |&gt;\n  gt_se()\n\n\n\n\nTable 1: Loss statistics when the crew’s payoffs are misjudged, by strategy.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStrategy\n\nLoss ($M)\n\nMost-hit asset\n\n\nMean\nMedian\n95th pct.\n99th pct.\n\n\n\n\nRobust equilibrium\n9.0\n7.4\n14.9\n19.4\nCorporate IT (68%)\n\n\nProportional\n10.7\n10.6\n22.3\n22.3\nIdentity (47%)\n\n\nUniform\n13.3\n10.5\n26.3\n26.3\nIdentity (47%)\n\n\nRisk-ranked\n13.9\n13.9\n23.2\n23.2\nIdentity (56%)\n\n\nTextbook equilibrium\n15.3\n12.9\n46.5\n46.5\nClient data (20%)\n\n\n\n\n\n\n\n\n\n\n\nHow to read the table. Each row is a strategy, sorted by average loss. The loss columns show the average, the middle case, and the bad cases that 1 in 20 and 1 in 100 simulated crews exceed. The last column shows the asset attacked most often and the share of crews that attack it.\nWhat the table tells you. The robust strategy has the lowest average and the smallest bad cases. The textbook equilibrium has the worst average, and its 95th percentile is 3.1 times the robust figure. The crew’s favorite target also differs across strategies.\n\n\n\n\n\n\n\nNoteHow much each strategy relies on a perfect read\n\n\n\nIf our read of the crew is wrong, the robust strategy loses $1.6M more than planned, and the textbook strategy loses $10.3M more. The textbook plan’s efficiency rests almost entirely on accurate intelligence.",
+    "crumbs": [
+      "Robustness"
+    ]
+  },
+  {
+    "objectID": "03-robustness.html#the-robust-equilibrium",
+    "href": "03-robustness.html#the-robust-equilibrium",
+    "title": "Misreading the Attacker",
+    "section": "The robust equilibrium",
+    "text": "The robust equilibrium\nThe robust strategy assumes the crew mostly, but not always, picks the best target. It gives each target a chance of being hit that rises with how attractive it is to the crew, then minimizes our expected loss against those chances. A rationality parameter, \\(\\lambda\\), controls how sharp the crew is.\nWe set \\(\\lambda =\\) 2, chosen on a separate set of simulated crews so the choice is not tuned to the results we report. Optimizing at 2 gives the lowest average loss: $9.13M at 1, $9.03M at 2, $9.83M at 3 and $11.21M at 5.\n\n\n\n\n\n\nNoteThe math behind the equilibrium\n\n\n\n\n\nThe crew attacks target \\(t\\) with probability\n\\[q_t(c) = \\frac{\\exp(\\lambda U_a(t,c))}{\\sum_s \\exp(\\lambda U_a(s,c))}.\\]\nWe minimize \\(f(c) = \\sum_t q_t(c)\\,\\ell_t(c)\\) over feasible coverage, with \\(\\ell_t\\) our loss on target \\(t\\). The gradient is analytic and checked against finite differences. A multistart SLSQP search handles the nonconvexity.",
+    "crumbs": [
+      "Robustness"
+    ]
+  },
+  {
+    "objectID": "03-robustness.html#noisy-attackers",
+    "href": "03-robustness.html#noisy-attackers",
+    "title": "Misreading the Attacker",
+    "section": "Noisy attackers",
+    "text": "Noisy attackers\n\n\nCode\nsweep |&gt;\n  mutate(strategy = factor(strategy, levels = STRAT_ORDER)) |&gt;\n  ggplot(aes(lambda, expected_loss, color = strategy, linetype = strategy)) +\n  geom_line(linewidth = 1) +\n  geom_point(size = 1.8) +\n  scale_x_log10(breaks = LAMBDA_GRID, labels = LAMBDA_GRID) +\n  scale_color_manual(values = STRAT_COLS, labels = STRAT_LABELS, name = NULL) +\n  scale_linetype_manual(values = STRAT_LTY, labels = STRAT_LABELS, name = NULL) +\n  scale_y_continuous(labels = scales::label_dollar(suffix = \"M\")) +\n  labs(x = \"Crew sharpness (lambda, log scale)\", y = \"Expected loss\",\n       title = \"Robust wins unless the crew is nearly random\") +\n  guides(color = guide_legend(nrow = 2))\n\n\n\n\n\n\n\n\nFigure 2: Expected loss against a noisy crew as the crew becomes sharper (higher lambda). Strategies are held fixed.\n\n\n\n\n\n\nHow to read the plot. The horizontal axis shows how sharp the crew is: low values mean it picks targets almost at random, high values mean it always picks its best one. Each line is a strategy whose coverage is fixed. The vertical axis is our expected loss.\nWhat the plot tells you. The robust strategy has the lowest loss once the crew is moderately sharp (2 is our base case; robust leads from 1 upward). For a nearly random crew, simpler plans do slightly better. The textbook equilibrium is worse than robust at every sharpness.",
+    "crumbs": [
+      "Robustness"
+    ]
+  },
+  {
+    "objectID": "03-robustness.html#the-budget-frontier",
+    "href": "03-robustness.html#the-budget-frontier",
+    "title": "Misreading the Attacker",
+    "section": "The budget frontier",
+    "text": "The budget frontier\n\n\nCode\nfr |&gt;\n  mutate(strategy = factor(strategy, levels = STRAT_ORDER)) |&gt;\n  ggplot(aes(budget, mc_mean, color = strategy, linetype = strategy)) +\n  geom_vline(xintercept = BUDGET_BASE, color = \"gray60\", linetype = \"dotted\") +\n  geom_line(linewidth = 1) +\n  scale_color_manual(values = STRAT_COLS, labels = STRAT_LABELS, name = NULL) +\n  scale_linetype_manual(values = STRAT_LTY, labels = STRAT_LABELS, name = NULL) +\n  scale_x_continuous(labels = scales::label_dollar(suffix = \"M\")) +\n  scale_y_continuous(labels = scales::label_dollar(suffix = \"M\")) +\n  labs(x = \"Allocable budget\", y = \"Expected loss if we misjudge the crew\",\n       title = \"Robust stays ahead as the budget grows\") +\n  guides(color = guide_legend(nrow = 2))\n\n\n\n\n\n\n\n\nFigure 3: Expected loss when we misjudge the crew, by budget. The vertical line marks the base budget.\n\n\n\n\n\n\nHow to read the plot. Each line shows average loss by budget for one strategy when we misjudge the crew. The dotted line is our base budget.\nWhat the plot tells you. Robust is lowest at nearly every budget. Extra money can hurt a simple plan: risk-ranked rises from $12.2M at $11.0M to $15.3M at $14.0M, and textbook from $15.3M at $9.0M to $17.0M at $11.0M, as new coverage pushes the crew toward a thin asset. At $5.5M a baseline edges ahead, though robust still beats the sharp crew it is built for. Above $16.5M every asset hits its cap.\n\nMoving from $9.0M to $10.0M lowers the expected loss from misjudging the crew by $0.83M under robust and $1.55M under risk-ranked. Robust still leads at $10.0M: $8.2M against $12.3M. Across the budget grid from $5.0M to $20M, robust is lowest or tied at every budget except $5.5M.\nTry it: move the slider to see how coverage and the crew’s likely target change.\n\n\nCode\nsliderRows = transpose(slider)\n\n\n\n\n\n\n\n\n\nCode\nviewof budget = Inputs.range([5, 20], {step: 0.5, value: 9, label: \"Allocable budget ($M)\"})\n\n\n\n\n\n\n\n\n\nCode\nnow = sliderRows.filter(d =&gt; Math.abs(d.budget - budget) &lt; 1e-9)\n\n\n\n\n\n\n\n\n\nCode\nrr = now.find(d =&gt; d.strategy === \"risk_ranked\")\n\n\n\n\n\n\n\n\n\nCode\nrb = now.find(d =&gt; d.strategy === \"robust\")\n\n\n\n\n\n\n\n\n\nCode\nPlot.plot({\n  marginLeft: 100, marginRight: 30, marginBottom: 45,\n  height: 340,\n  x: {domain: [0, 1], label: \"Coverage\", labelAnchor: \"center\", tickFormat: d =&gt; (d * 100) + \"%\"},\n  fy: {domain: [\"Platform\", \"Pipeline\", \"Client data\", \"Identity\", \"Corporate IT\", \"Vendor\"], label: null},\n  y: {axis: null, domain: [\"Risk-ranked\", \"Robust equilibrium\"]},\n  color: {domain: [\"Risk-ranked\", \"Robust equilibrium\"], range: [\"#4D4D4D\", \"#0166CC\"], legend: true},\n  style: {fontFamily: \"inherit\", fontSize: \"13px\"},\n  marks: [\n    Plot.barX(now, {x: \"coverage\", y: \"strategy_label\", fy: \"asset\", fill: \"strategy_label\"}),\n    Plot.ruleX([0])\n  ]\n})\n\n\n\n\n\n\n\n\n\nCode\nhtml`&lt;div class=\"slider-sentence\"&gt;At &lt;b&gt;$${budget.toFixed(1)}M&lt;/b&gt;, the crew's best target is &lt;b&gt;${rr.target_label}&lt;/b&gt; under risk-ranked and &lt;b&gt;${rb.target_label}&lt;/b&gt; under robust. Expected loss if we misjudge the crew: &lt;b&gt;$${rr.mc_mean.toFixed(1)}M&lt;/b&gt; against &lt;b&gt;$${rb.mc_mean.toFixed(1)}M&lt;/b&gt;.&lt;/div&gt;`\n\n\n\n\n\n\n\n\nHow to read the plot. Drag the slider to choose a budget. Each group of bars is an asset, with the gray bar for risk-ranked coverage and the blue bar for the robust strategy. The sentence under the chart states the crew’s likely target and our expected loss under each approach.\nWhat the plot tells you. As the budget changes, risk-ranked keeps funding the same few assets, while the robust strategy spreads protection toward the places a crew is likely to hit. The sentence shows what that difference costs us.",
+    "crumbs": [
+      "Robustness"
+    ]
+  },
+  {
+    "objectID": "01-the-game.html",
+    "href": "01-the-game.html",
+    "title": "The Game",
+    "section": "",
+    "text": "All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative.",
+    "crumbs": [
+      "The Game"
+    ]
+  },
+  {
+    "objectID": "01-the-game.html#why-defend-the-most-valuable-asset-fails",
+    "href": "01-the-game.html#why-defend-the-most-valuable-asset-fails",
+    "title": "The Game",
+    "section": "Why “defend the most valuable asset” fails",
+    "text": "Why “defend the most valuable asset” fails\nThe usual budget logic ranks assets by expected loss and funds the top of the list. That logic treats the attacker as weather: a hazard with fixed odds.\nA ransomware crew is not weather. It looks at what we have protected and picks the target that pays best for it. Every dollar we move changes where the crew goes.\nSo a plan can look careful and still invite the attack. If we protect the crown jewel fully, the crew simply goes next door, and the asset we under-protected takes the hit.",
+    "crumbs": [
+      "The Game"
+    ]
+  },
+  {
+    "objectID": "01-the-game.html#a-two-asset-example",
+    "href": "01-the-game.html#a-two-asset-example",
+    "title": "The Game",
+    "section": "A two-asset example",
+    "text": "A two-asset example\nTake two assets. The production platform (PLAT) would cost us $45M if breached. The identity provider (IDP) would cost $18M. The crew values PLAT at $6M and IDP at $7M, so it slightly prefers IDP. We have one unit of coverage to split between them.\nWe compare three plans: protect the crown jewel completely, split coverage in proportion to impact, or play the game and equalize what the crew can gain from each target.\n\n\nCode\ng &lt;- two$grid |&gt;\n  tidyr::pivot_longer(c(PLAT, IDP), names_to = \"target\", values_to = \"payoff\")\nplans &lt;- tibble::tibble(\n  plan = c(\"Crown jewel\", \"Impact-proportional\", \"Equilibrium\"),\n  c_PLAT = c(pl$crown_jewel$coverage[[\"PLAT\"]], pl$impact_proportional$coverage[[\"PLAT\"]], pl$equilibrium$coverage[[\"PLAT\"]]),\n  loss = c(pl$crown_jewel$loss, pl$impact_proportional$loss, pl$equilibrium$loss)\n) |&gt;\n  mutate(\n    payoff = pmax(\n      c_PLAT * a2$A_c[1] + (1 - c_PLAT) * a2$V[1],\n      (1 - c_PLAT) * a2$A_c[2] + c_PLAT * a2$V[2]\n    ),\n    label = paste0(plan, \"\\nloss \", fmt_m(loss))\n  )\nggplot(g, aes(c_PLAT, payoff)) +\n  geom_line(aes(linetype = target, color = target), linewidth = 1) +\n  geom_point(data = plans, size = 3) +\n  ggrepel::geom_label_repel(\n    data = plans, aes(label = label), size = 3.3, min.segment.length = 0,\n    nudge_y = c(-2.3, 0.9, -2.8), nudge_x = c(-0.08, -0.02, 0.1), label.size = 0.2\n  ) +\n  scale_color_manual(values = c(PLAT = \"#4D4D4D\", IDP = \"#7A3E9D\"), name = \"Crew payoff on\") +\n  scale_linetype_manual(values = c(PLAT = \"solid\", IDP = \"dashed\"), name = \"Crew payoff on\") +\n  scale_x_continuous(labels = scales::percent) +\n  labs(x = \"Coverage on PLAT (remainder goes to IDP)\", y = \"Crew payoff ($M)\",\n       title = \"The equilibrium makes the crew indifferent\")\n\n\n\n\n\n\n\n\nFigure 1: The crew’s payoff on each target as coverage shifts from IDP to PLAT. The equilibrium sits where the lines cross.\n\n\n\n\n\n\nHow to read the plot. The horizontal axis shows how much of our one unit of protection goes to the platform; the rest goes to identity. Each line is what the crew would earn attacking that target, and it goes wherever its line is higher. Dots mark three plans.\nWhat the plot tells you. Protecting the crown jewel completely leaves identity open, so the crew goes there and we lose most. The equilibrium sits where the lines cross: the crew gains the same either way, and we pick the point that costs us least. Values are made up, so read the shape.\n\n\n\nCode\ntibble::tibble(\n  Plan = c(\"Protect the crown jewel\", \"Impact-proportional\", \"Equilibrium\"),\n  `Coverage on PLAT` = c(pl$crown_jewel$coverage[[\"PLAT\"]], pl$impact_proportional$coverage[[\"PLAT\"]], pl$equilibrium$coverage[[\"PLAT\"]]),\n  `Coverage on IDP` = c(pl$crown_jewel$coverage[[\"IDP\"]], pl$impact_proportional$coverage[[\"IDP\"]], pl$equilibrium$coverage[[\"IDP\"]]),\n  `Crew target` = c(pl$crown_jewel$target, pl$impact_proportional$target, pl$equilibrium$target),\n  `Defender loss ($M)` = c(pl$crown_jewel$loss, pl$impact_proportional$loss, pl$equilibrium$loss)\n) |&gt;\n  gt() |&gt;\n  fmt_number(columns = starts_with(\"Coverage\"), decimals = 3) |&gt;\n  fmt_number(columns = `Defender loss ($M)`, decimals = 1) |&gt;\n  gt_se()\n\n\n\n\nTable 1: Three plans for the two-asset example: coverage, the crew’s chosen target, and our expected loss.\n\n\n\n\n\n\n\n\n\nPlan\nCoverage on PLAT\nCoverage on IDP\nCrew target\nDefender loss ($M)\n\n\n\n\nProtect the crown jewel\n1.000\n0.000\nIDP\n18.0\n\n\nImpact-proportional\n0.714\n0.286\nIDP\n13.4\n\n\nEquilibrium\n0.448\n0.552\nIDP\n9.1\n\n\n\n\n\n\n\n\n\n\n\nHow to read the table. Each row is one way to split our protection between the two assets. The columns show how much goes to each asset, which asset the crew then attacks, and what the attack costs us on average.\nWhat the table tells you. In every plan the crew attacks the identity provider, because we cannot make the platform and identity equally unattractive without moving coverage toward identity. The plan that anticipates this loses about half as much as the crown-jewel plan. Good protection means steering the crew, not only guarding the biggest asset.",
+    "crumbs": [
+      "The Game"
+    ]
+  },
+  {
+    "objectID": "01-the-game.html#the-setup-in-one-paragraph",
+    "href": "01-the-game.html#the-setup-in-one-paragraph",
+    "title": "The Game",
+    "section": "The setup in one paragraph",
+    "text": "The setup in one paragraph\nWe choose how much coverage each asset gets. The crew sees our choice and attacks the target with the best payoff for it. We pick the coverage that minimizes our loss given that response. This is a Stackelberg game: we move first, the crew moves second. When the crew is indifferent between targets, we assume it breaks the tie in our favor.\n\n\n\n\n\n\nNoteThe math behind the setup\n\n\n\n\n\nCoverage \\(c_t \\in [\\text{floor},\\, c^{max}_t]\\) on target \\(t\\) costs \\(k_t c_t\\), with \\(\\sum_t k_t c_t \\le B\\). Payoffs are\n\\[U_d(t,c) = c_t U_d^c(t) + (1-c_t)U_d^u(t), \\qquad U_a(t,c) = c_t A^c_t + (1-c_t)V_t.\\]\nThe crew picks \\(t^* = \\arg\\max_t U_a(t,c)\\). The textbook equilibrium solves one linear program per candidate target and keeps the best for us.",
+    "crumbs": [
+      "The Game"
+    ]
+  },
+  {
+    "objectID": "01-the-game.html#three-assumptions",
+    "href": "01-the-game.html#three-assumptions",
+    "title": "The Game",
+    "section": "Three assumptions",
+    "text": "Three assumptions\n\nThe crew observes our coverage. It probes before it strikes.\nOur commitment is credible. We do not change the allocation after the crew chooses.\nWe can estimate the crew’s payoffs. This is the weak point. Page 4 relaxes it.",
+    "crumbs": [
+      "The Game"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Where Will the Attacker Strike?",
+    "section": "",
+    "text": "All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative and synthetic.",
+    "crumbs": [
+      "Executive Summary"
+    ]
+  },
+  {
+    "objectID": "index.html#the-problem",
+    "href": "index.html#the-problem",
+    "title": "Where Will the Attacker Strike?",
+    "section": "The problem",
+    "text": "The problem\nMost security budgets are ranked: list the risks, fund from the top. That treats the attacker as weather. Ransomware crews adapt. They look at what we defend and go where the payoff is best for them.\nWe study a 500-person fintech firm whose cloud platform is critical infrastructure for its clients. It splits $9.0M a year across six assets, and a ransomware crew picks one to hit. We compare five ways to split the money.",
+    "crumbs": [
+      "Executive Summary"
+    ]
+  },
+  {
+    "objectID": "index.html#three-findings",
+    "href": "index.html#three-findings",
+    "title": "Where Will the Attacker Strike?",
+    "section": "Three findings",
+    "text": "Three findings\n\nRisk-ranking invites the attack. Funding the top risks first leaves identity at baseline coverage, and the crew goes there. If we read the crew perfectly, expected loss is $13.9M against $7.4M for the robust allocation; if we misjudge it, $13.9M against $9.0M.\nThe textbook equilibrium looks best on paper and is worst under uncertainty. If we read the crew perfectly, it cuts loss to $4.9M. If we misjudge the crew modestly, the 95th percentile loss is $46.5M.\nThe robust allocation anticipates the attacker without betting on a perfect read. It cuts expected loss by 35% and the tail by 36% against risk-ranked.\n\n\n\nCode\nord &lt;- ms |&gt; arrange(mean) |&gt; pull(strategy)\nd &lt;- ms |&gt;\n  select(strategy, mean, p95) |&gt;\n  left_join(base |&gt; select(strategy, loss_rational), by = \"strategy\") |&gt;\n  mutate(y = match(strategy, rev(ord)))            # numeric row position, best on top\nbar_h &lt;- 0.34\nggplot(d) +\n  # light bar: crew read perfectly (upper half of each row)\n  geom_rect(aes(xmin = 0, xmax = loss_rational, ymin = y + 0.02, ymax = y + 0.02 + bar_h,\n                fill = strategy), alpha = 0.4) +\n  # dark bar: crew misjudged (lower half of each row)\n  geom_rect(aes(xmin = 0, xmax = mean, ymin = y - 0.02 - bar_h, ymax = y - 0.02,\n                fill = strategy)) +\n  # whisker from the misjudged mean to the 95th percentile\n  geom_segment(aes(x = mean, xend = p95, y = y - 0.02 - bar_h / 2, yend = y - 0.02 - bar_h / 2),\n               color = \"gray25\", linewidth = 0.5) +\n  geom_segment(aes(x = p95, xend = p95, y = y - 0.02 - bar_h * 0.85, yend = y - 0.02 - bar_h * 0.15),\n               color = \"gray25\", linewidth = 0.5) +\n  # labels\n  geom_text(aes(x = loss_rational, y = y + 0.02 + bar_h / 2, label = fmt_m(loss_rational)),\n            hjust = -0.15, size = 3.4, color = \"gray20\") +\n  geom_text(aes(x = mean, y = y - 0.02 - bar_h / 2, label = fmt_m(mean),\n                color = strategy == \"uniform\"),               # dark text on the pale bar\n            hjust = 1.15, size = 3.4, fontface = \"bold\") +\n  scale_color_manual(values = c(`TRUE` = \"gray15\", `FALSE` = \"white\"), guide = \"none\") +\n  geom_text(aes(x = p95, y = y - 0.02 - bar_h / 2, label = paste0(\"1-in-20: \", fmt_m(p95))),\n            hjust = -0.1, size = 3.1, color = \"gray30\") +\n  scale_fill_manual(values = STRAT_COLS, guide = \"none\") +\n  scale_y_continuous(breaks = d$y, labels = STRAT_LABELS[d$strategy], expand = expansion(add = 0.3)) +\n  scale_x_continuous(labels = scales::label_dollar(suffix = \"M\"),\n                     limits = c(0, max(d$p95) * 1.28), expand = expansion(mult = c(0, 0))) +\n  labs(x = \"Expected loss per campaign\", y = NULL,\n       title = \"Robust wins when we are wrong about the crew\",\n       subtitle = \"Light bar: if we read the crew perfectly.  Dark bar: if we misjudge it (line to the 1-in-20 bad case).\") +\n  theme(panel.grid.major.y = element_blank(), panel.grid.minor = element_blank(),\n        plot.subtitle = element_text(size = 10))\n\n\n\n\n\n\n\n\nFigure 1: Expected loss per campaign by strategy, if we read the crew perfectly and if we misjudge it. The line runs to the 1-in-20 bad case.\n\n\n\n\n\n\nHow to read the plot. For each strategy, the light bar is our loss if we read the crew perfectly; the dark bar is our average loss if we misjudge it, and the line runs to the 1-in-20 bad case.\nWhat the plot tells you. The textbook equilibrium has the lowest light bar and the highest dark bar: it is cheapest on paper and costliest when wrong. The robust strategy gives up some of the paper saving and has the lowest average and the shortest line.\n\n\n\n\n\n\n\nNoteQuestions to ask your CISO\n\n\n\n\nWhere does our current plan push an attacker?\nWhich high-impact assets are we under-protecting because we assume attackers don’t want them?\nHow would our allocation perform if our threat intelligence is wrong?\nWhat does the next $1M buy under each approach?",
+    "crumbs": [
+      "Executive Summary"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-read-this-site",
+    "href": "index.html#how-to-read-this-site",
+    "title": "Where Will the Attacker Strike?",
+    "section": "How to read this site",
+    "text": "How to read this site\n\nThe Game: a two-asset example shows why defending the biggest asset can fail.\nAllocation: the firm, the six assets and four ways to split the budget.\nRobustness: what happens when we misjudge the crew, and the robust strategy.\nGovernance: the assumptions, the limits and the automated checks.",
+    "crumbs": [
+      "Executive Summary"
+    ]
+  },
+  {
+    "objectID": "02-allocation.html",
+    "href": "02-allocation.html",
+    "title": "Allocating the Budget",
+    "section": "",
+    "text": "All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative.",
+    "crumbs": [
+      "Allocation"
+    ]
+  },
+  {
+    "objectID": "02-allocation.html#the-firm",
+    "href": "02-allocation.html#the-firm",
+    "title": "Allocating the Budget",
+    "section": "The firm",
+    "text": "The firm\nThe firm has 500 staff. Its cloud platform is critical infrastructure for its bank and broker clients. It has $9.0M a year to allocate across six assets. That budget includes a hygiene floor: every asset keeps at least 25% coverage, because compliance demands it.\n\n\nCode\nmu &lt;- log(assets$L) - LOSS_SIGMA^2 / 2\nassets |&gt;\n  mutate(\n    Asset = ASSET_SHORT[asset_id],\n    median = exp(mu),\n    lo = exp(mu - 1.645 * LOSS_SIGMA),\n    hi = exp(mu + 1.645 * LOSS_SIGMA),\n    ci = sprintf(\"%.1f to %.1f\", lo, hi)\n  ) |&gt;\n  select(Asset, L, median, ci, V, k, c_max, p_heat) |&gt;\n  gt() |&gt;\n  tab_spanner(\"Defender loss ($M)\", columns = c(L, median, ci)) |&gt;\n  cols_label(L = \"Mean\", median = \"Median\", ci = \"90% interval\", V = \"Crew value ($M)\",\n             k = \"Cost to cover ($M)\", c_max = \"Coverage cap\", p_heat = \"Heat-map likelihood\") |&gt;\n  fmt_number(columns = c(L, median, V, k), decimals = 1) |&gt;\n  fmt_number(columns = c(c_max, p_heat), decimals = 2) |&gt;\n  tab_source_note(\"Illustrative values. Loss is treated as the mean of a lognormal with sigma = 0.8; median and interval are shown for context only.\") |&gt;\n  gt_se()\n\n\n\n\nTable 1: The six assets and their parameters. Illustrative values.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsset\n\nDefender loss ($M)\n\nCrew value ($M)\nCost to cover ($M)\nCoverage cap\nHeat-map likelihood\n\n\nMean\nMedian\n90% interval\n\n\n\n\nPlatform\n45.0\n32.7\n8.8 to 121.8\n6.0\n4.0\n0.90\n0.30\n\n\nPipeline\n60.0\n43.6\n11.7 to 162.4\n2.5\n3.0\n0.90\n0.15\n\n\nClient data\n30.0\n21.8\n5.8 to 81.2\n5.0\n2.5\n0.90\n0.30\n\n\nIdentity\n18.0\n13.1\n3.5 to 48.7\n7.0\n2.0\n0.90\n0.25\n\n\nCorporate IT\n10.0\n7.3\n1.9 to 27.1\n5.5\n3.0\n0.85\n0.50\n\n\nVendor\n20.0\n14.5\n3.9 to 54.1\n4.0\n5.0\n0.70\n0.20\n\n\n\nIllustrative values. Loss is treated as the mean of a lognormal with sigma = 0.8; median and interval are shown for context only.\n\n\n\n\n\n\n\n\n\n\n\n\nHow to read the table. Each row is an asset. The first block is what a successful attack costs us; “crew value” is what the crew gains. “Cost to cover” is the price of full coverage, and the cap is the most protection we can reach.\nWhat the table tells you. Our biggest loss (the pipeline) is among the crew’s least valued targets, while identity is the crew’s favorite and costs us far less. The wide 90% intervals warn that a typical loss can differ greatly from the average.",
+    "crumbs": [
+      "Allocation"
+    ]
+  },
+  {
+    "objectID": "02-allocation.html#where-we-and-the-crew-disagree",
+    "href": "02-allocation.html#where-we-and-the-crew-disagree",
+    "title": "Allocating the Budget",
+    "section": "Where we and the crew disagree",
+    "text": "Where we and the crew disagree\n\n\nCode\nassets |&gt;\n  mutate(rank_L = rank(L), rank_V = rank(V), label = ASSET_SHORT[asset_id]) |&gt;\n  ggplot(aes(rank_L, rank_V)) +\n  geom_abline(slope = 1, intercept = 0, linetype = \"dashed\", color = \"gray50\") +\n  geom_point(size = 3.5, color = \"#0166CC\") +\n  ggrepel::geom_text_repel(aes(label = label), size = 4, box.padding = 0.5) +\n  scale_x_continuous(breaks = 1:6, limits = c(0.7, 6.3)) +\n  scale_y_continuous(breaks = 1:6, limits = c(0.7, 6.3)) +\n  labs(x = \"Rank by our loss (6 = largest)\", y = \"Rank by crew value (6 = most attractive)\",\n       title = \"Our biggest worries are not the crew's favorites\")\n\n\n\n\n\n\n\n\nFigure 1: Rank of each asset by our loss against rank by the crew’s value. Distance from the diagonal measures disagreement.\n\n\n\n\n\n\nHow to read the plot. Each dot is an asset. Moving right means a larger loss for us; moving up means more attractive to the crew. The dashed diagonal marks assets where both sides agree on the ranking.\nWhat the plot tells you. The pipeline is our largest loss but ranks last for the crew, so the crew has little reason to attack it. Identity is the reverse. A plan built only on our own risk ranking will misjudge where the crew goes.",
+    "crumbs": [
+      "Allocation"
+    ]
+  },
+  {
+    "objectID": "02-allocation.html#four-strategies-at-the-base-budget",
+    "href": "02-allocation.html#four-strategies-at-the-base-budget",
+    "title": "Allocating the Budget",
+    "section": "Four strategies at the base budget",
+    "text": "Four strategies at the base budget\nWe compare four ways to spend $9.0M. The robust strategy joins on page 4.\n\n\nCode\nfour &lt;- c(\"risk_ranked\", \"proportional\", \"uniform\", \"textbook\")\nbase$strategies |&gt;\n  filter(strategy %in% four) |&gt;\n  left_join(sm |&gt; select(strategy, target), by = \"strategy\") |&gt;\n  mutate(\n    strategy = factor(STRAT_LABELS[strategy], levels = STRAT_LABELS[four]),\n    asset = factor(ASSET_SHORT[asset_id], levels = ASSET_SHORT),\n    hit = ifelse(asset_id == target, \"Crew's target\", \"Other asset\")\n  ) |&gt;\n  ggplot(aes(asset, coverage, fill = hit)) +\n  geom_col(width = 0.75) +\n  facet_wrap(~strategy, ncol = 2) +\n  scale_fill_manual(values = c(\"Crew's target\" = \"#7A3E9D\", \"Other asset\" = \"#C8C8C8\"), name = NULL) +\n  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +\n  labs(x = NULL, y = \"Coverage\") +\n  theme(axis.text.x = element_text(angle = 30, hjust = 1))\n\n\n\n\n\n\n\n\nFigure 2: Coverage by asset under four strategies. The crew’s chosen target is highlighted in each panel.\n\n\n\n\n\n\nHow to read the plot. Each panel is one way to split the budget. Bars show how much of each asset is protected. The purple bar is the asset the crew would attack if it reads our defenses perfectly.\nWhat the plot tells you. Risk-ranked piles protection onto two assets and leaves identity at the floor, which is where the crew goes. Proportional and uniform spread money out but still leave identity as the best target. Only the textbook plan changes the crew’s destination.\n\n\n\nCode\nsm |&gt;\n  filter(strategy %in% four) |&gt;\n  transmute(Strategy = STRAT_LABELS[strategy], Target = ASSET_SHORT[target], Loss = loss_rational) |&gt;\n  gt() |&gt;\n  cols_label(Target = \"Crew target\", Loss = \"Expected loss ($M)\") |&gt;\n  fmt_number(columns = Loss, decimals = 1) |&gt;\n  gt_se()\n\n\n\n\nTable 2: Crew target and our expected loss under each strategy, assuming a perfectly rational crew.\n\n\n\n\n\n\n\n\n\nStrategy\nCrew target\nExpected loss ($M)\n\n\n\n\nRisk-ranked\nIdentity\n13.9\n\n\nProportional\nIdentity\n10.6\n\n\nUniform\nIdentity\n10.5\n\n\nTextbook equilibrium\nCorporate IT\n4.9\n\n\n\n\n\n\n\n\n\n\n\nHow to read the table. Each row is a strategy. The second column is the asset the crew attacks if it picks its best option. The third is our average loss from that attack.\nWhat the table tells you. Risk-ranking has the highest loss. The textbook plan looks far better, but this table assumes we know exactly what the crew wants. Page 4 tests that assumption.",
+    "crumbs": [
+      "Allocation"
+    ]
+  },
+  {
+    "objectID": "02-allocation.html#interpretation",
+    "href": "02-allocation.html#interpretation",
+    "title": "Allocating the Budget",
+    "section": "Interpretation",
+    "text": "Interpretation\nRisk-ranked funds the platform and pipeline and leaves identity at the floor. The crew sees this and goes to identity, for an expected loss of $13.9M.\nThe textbook equilibrium does something cleverer. It sets coverage so that the crew earns the same on 5 of the six assets. It lets the attack fall on corporate IT, a low-impact target, and cuts expected loss to $4.9M.\nThe trick has a price. The crew values the pipeline too little to bother, so the textbook plan holds the pipeline at 25%, the floor. The pipeline is our largest single loss.\nThis is the trap: the plan only works if we’ve read the crew perfectly.",
+    "crumbs": [
+      "Allocation"
+    ]
+  },
+  {
+    "objectID": "02-allocation.html#alignment-check",
+    "href": "02-allocation.html#alignment-check",
+    "title": "Allocating the Budget",
+    "section": "Alignment check",
+    "text": "Alignment check\nWhat if the crew wanted what we fear most? We reran the comparison with crew values proportional to our losses. The textbook plan then costs $13.5M, with the crew attacking identity systems. Risk-ranked costs $23.2M, with the crew attacking client data.\nThe gap does not close. Concentration itself is the problem, not just misreading the attacker: risk-ranked spends heavily on a few assets and leaves the rest cheap to hit, whatever the crew wants.",
+    "crumbs": [
+      "Allocation"
+    ]
+  },
+  {
     "objectID": "04-governance.html",
     "href": "04-governance.html",
     "title": "Governance & Audit",
@@ -77,216 +294,6 @@
     "text": "Session Information\n\n\n\n\n\n\nNoteFull R session information\n\n\n\n\n\n\n\n─ Session info ───────────────────────────────────────────────────────────────\n setting  value\n version  R version 4.5.2 (2025-10-31)\n os       macOS Tahoe 26.6.2\n system   aarch64, darwin20\n ui       X11\n language (EN)\n collate  en_US.UTF-8\n ctype    en_US.UTF-8\n tz       America/New_York\n date     2026-11-13\n pandoc   3.10 @ /Applications/Positron.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown)\n quarto   1.8.26 @ /Applications/quarto/bin/quarto\n\n─ Packages ───────────────────────────────────────────────────────────────────\n package      * version date (UTC) lib source\n archive        1.1.12  2025-03-20 [1] CRAN (R 4.5.0)\n bit            4.6.0   2025-03-06 [1] CRAN (R 4.5.0)\n bit64          4.8.2   2026-05-19 [1] CRAN (R 4.5.2)\n cli            3.6.6   2026-04-09 [1] CRAN (R 4.5.2)\n crayon         1.5.3   2024-06-20 [1] CRAN (R 4.5.0)\n digest         0.6.39  2025-11-19 [1] CRAN (R 4.5.2)\n dplyr        * 1.2.1   2026-04-03 [1] CRAN (R 4.5.2)\n evaluate       1.0.5   2025-08-27 [1] CRAN (R 4.5.0)\n farver         2.1.2   2024-05-13 [1] CRAN (R 4.5.0)\n fastmap        1.2.0   2024-05-15 [1] CRAN (R 4.5.0)\n fs             2.1.0   2026-04-18 [1] CRAN (R 4.5.2)\n generics       0.1.4   2025-05-09 [1] CRAN (R 4.5.0)\n ggplot2      * 4.0.3   2026-04-22 [1] CRAN (R 4.5.2)\n glue           1.8.1   2026-04-17 [1] CRAN (R 4.5.2)\n gt           * 1.3.0   2026-01-22 [1] CRAN (R 4.5.2)\n gtable         0.3.6   2024-10-25 [1] CRAN (R 4.5.0)\n hms            1.1.4   2025-10-17 [1] CRAN (R 4.5.0)\n htmltools      0.5.9   2025-12-04 [1] CRAN (R 4.5.2)\n htmlwidgets    1.6.4   2023-12-06 [1] CRAN (R 4.5.0)\n jsonlite       2.0.0   2025-03-27 [1] CRAN (R 4.5.0)\n knitr          1.50    2025-03-16 [1] CRAN (R 4.5.0)\n lifecycle      1.0.5   2026-01-08 [1] CRAN (R 4.5.2)\n magrittr       2.0.5   2026-04-04 [1] CRAN (R 4.5.2)\n pillar         1.11.1  2025-09-17 [1] CRAN (R 4.5.0)\n pkgconfig      2.0.3   2019-09-22 [1] CRAN (R 4.5.0)\n R6             2.6.1   2025-02-15 [1] CRAN (R 4.5.0)\n RColorBrewer   1.1-3   2022-04-03 [1] CRAN (R 4.5.0)\n readr          2.1.5   2024-01-10 [1] CRAN (R 4.5.0)\n rlang          1.3.0   2026-07-05 [1] CRAN (R 4.5.2)\n rmarkdown      2.30    2025-09-28 [1] CRAN (R 4.5.0)\n S7             0.2.2   2026-04-22 [1] CRAN (R 4.5.2)\n sass           0.4.10  2025-04-11 [1] CRAN (R 4.5.0)\n scales         1.4.0   2025-04-24 [1] CRAN (R 4.5.0)\n sessioninfo    1.2.3   2025-02-05 [1] CRAN (R 4.5.0)\n tibble         3.3.1   2026-01-11 [1] CRAN (R 4.5.2)\n tidyselect     1.2.1   2024-03-11 [1] CRAN (R 4.5.0)\n tzdb           0.5.0   2025-03-15 [1] CRAN (R 4.5.0)\n vctrs          0.7.3   2026-04-11 [1] CRAN (R 4.5.2)\n vroom          1.6.6   2025-09-19 [1] CRAN (R 4.5.0)\n withr          3.0.3   2026-06-19 [1] CRAN (R 4.5.2)\n xfun           0.54    2025-10-30 [1] CRAN (R 4.5.0)\n xml2           1.4.1   2025-10-27 [1] CRAN (R 4.5.0)\n yaml           2.3.10  2024-07-26 [1] CRAN (R 4.5.0)\n\n [1] /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library\n * ── Packages attached to the search path.\n\n──────────────────────────────────────────────────────────────────────────────",
     "crumbs": [
       "Governance"
-    ]
-  },
-  {
-    "objectID": "02-allocation.html",
-    "href": "02-allocation.html",
-    "title": "Allocating the Budget",
-    "section": "",
-    "text": "All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative.",
-    "crumbs": [
-      "Allocation"
-    ]
-  },
-  {
-    "objectID": "02-allocation.html#the-firm",
-    "href": "02-allocation.html#the-firm",
-    "title": "Allocating the Budget",
-    "section": "The firm",
-    "text": "The firm\nThe firm has 500 staff. Its cloud platform is critical infrastructure for its bank and broker clients. It has $9.0M a year to allocate across six assets. That budget includes a hygiene floor: every asset keeps at least 25% coverage, because compliance demands it.\n\n\nCode\nmu &lt;- log(assets$L) - LOSS_SIGMA^2 / 2\nassets |&gt;\n  mutate(\n    Asset = ASSET_SHORT[asset_id],\n    median = exp(mu),\n    lo = exp(mu - 1.645 * LOSS_SIGMA),\n    hi = exp(mu + 1.645 * LOSS_SIGMA),\n    ci = sprintf(\"%.1f to %.1f\", lo, hi)\n  ) |&gt;\n  select(Asset, L, median, ci, V, k, c_max, p_heat) |&gt;\n  gt() |&gt;\n  tab_spanner(\"Defender loss ($M)\", columns = c(L, median, ci)) |&gt;\n  cols_label(L = \"Mean\", median = \"Median\", ci = \"90% interval\", V = \"Crew value ($M)\",\n             k = \"Cost to cover ($M)\", c_max = \"Coverage cap\", p_heat = \"Heat-map likelihood\") |&gt;\n  fmt_number(columns = c(L, median, V, k), decimals = 1) |&gt;\n  fmt_number(columns = c(c_max, p_heat), decimals = 2) |&gt;\n  tab_source_note(\"Illustrative values. Loss is treated as the mean of a lognormal with sigma = 0.8; median and interval are shown for context only.\") |&gt;\n  gt_se()\n\n\n\n\nTable 1: The six assets and their parameters. Illustrative values.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsset\n\nDefender loss ($M)\n\nCrew value ($M)\nCost to cover ($M)\nCoverage cap\nHeat-map likelihood\n\n\nMean\nMedian\n90% interval\n\n\n\n\nPlatform\n45.0\n32.7\n8.8 to 121.8\n6.0\n4.0\n0.90\n0.30\n\n\nPipeline\n60.0\n43.6\n11.7 to 162.4\n2.5\n3.0\n0.90\n0.15\n\n\nClient data\n30.0\n21.8\n5.8 to 81.2\n5.0\n2.5\n0.90\n0.30\n\n\nIdentity\n18.0\n13.1\n3.5 to 48.7\n7.0\n2.0\n0.90\n0.25\n\n\nCorporate IT\n10.0\n7.3\n1.9 to 27.1\n5.5\n3.0\n0.85\n0.50\n\n\nVendor\n20.0\n14.5\n3.9 to 54.1\n4.0\n5.0\n0.70\n0.20\n\n\n\nIllustrative values. Loss is treated as the mean of a lognormal with sigma = 0.8; median and interval are shown for context only.\n\n\n\n\n\n\n\n\n\n\n\n\nHow to read the table. Each row is an asset. The first block is what a successful attack costs us; “crew value” is what the crew gains. “Cost to cover” is the price of full coverage, and the cap is the most protection we can reach.\nWhat the table tells you. Our biggest loss (the pipeline) is among the crew’s least valued targets, while identity is the crew’s favorite and costs us far less. The wide 90% intervals warn that a typical loss can differ greatly from the average.",
-    "crumbs": [
-      "Allocation"
-    ]
-  },
-  {
-    "objectID": "02-allocation.html#where-we-and-the-crew-disagree",
-    "href": "02-allocation.html#where-we-and-the-crew-disagree",
-    "title": "Allocating the Budget",
-    "section": "Where we and the crew disagree",
-    "text": "Where we and the crew disagree\n\n\nCode\nassets |&gt;\n  mutate(rank_L = rank(L), rank_V = rank(V), label = ASSET_SHORT[asset_id]) |&gt;\n  ggplot(aes(rank_L, rank_V)) +\n  geom_abline(slope = 1, intercept = 0, linetype = \"dashed\", color = \"gray50\") +\n  geom_point(size = 3.5, color = \"#0166CC\") +\n  ggrepel::geom_text_repel(aes(label = label), size = 4, box.padding = 0.5) +\n  scale_x_continuous(breaks = 1:6, limits = c(0.7, 6.3)) +\n  scale_y_continuous(breaks = 1:6, limits = c(0.7, 6.3)) +\n  labs(x = \"Rank by our loss (6 = largest)\", y = \"Rank by crew value (6 = most attractive)\",\n       title = \"Our biggest worries are not the crew's favorites\")\n\n\n\n\n\n\n\n\nFigure 1: Rank of each asset by our loss against rank by the crew’s value. Distance from the diagonal measures disagreement.\n\n\n\n\n\n\nHow to read the plot. Each dot is an asset. Moving right means a larger loss for us; moving up means more attractive to the crew. The dashed diagonal marks assets where both sides agree on the ranking.\nWhat the plot tells you. The pipeline is our largest loss but ranks last for the crew, so the crew has little reason to attack it. Identity is the reverse. A plan built only on our own risk ranking will misjudge where the crew goes.",
-    "crumbs": [
-      "Allocation"
-    ]
-  },
-  {
-    "objectID": "02-allocation.html#four-strategies-at-the-base-budget",
-    "href": "02-allocation.html#four-strategies-at-the-base-budget",
-    "title": "Allocating the Budget",
-    "section": "Four strategies at the base budget",
-    "text": "Four strategies at the base budget\nWe compare four ways to spend $9.0M. The robust strategy joins on page 4.\n\n\nCode\nfour &lt;- c(\"risk_ranked\", \"proportional\", \"uniform\", \"textbook\")\nbase$strategies |&gt;\n  filter(strategy %in% four) |&gt;\n  left_join(sm |&gt; select(strategy, target), by = \"strategy\") |&gt;\n  mutate(\n    strategy = factor(STRAT_LABELS[strategy], levels = STRAT_LABELS[four]),\n    asset = factor(ASSET_SHORT[asset_id], levels = ASSET_SHORT),\n    hit = ifelse(asset_id == target, \"Crew's target\", \"Other asset\")\n  ) |&gt;\n  ggplot(aes(asset, coverage, fill = hit)) +\n  geom_col(width = 0.75) +\n  facet_wrap(~strategy, ncol = 2) +\n  scale_fill_manual(values = c(\"Crew's target\" = \"#7A3E9D\", \"Other asset\" = \"#C8C8C8\"), name = NULL) +\n  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +\n  labs(x = NULL, y = \"Coverage\") +\n  theme(axis.text.x = element_text(angle = 30, hjust = 1))\n\n\n\n\n\n\n\n\nFigure 2: Coverage by asset under four strategies. The crew’s chosen target is highlighted in each panel.\n\n\n\n\n\n\nHow to read the plot. Each panel is one way to split the budget. Bars show how much of each asset is protected. The purple bar is the asset the crew would attack if it reads our defenses perfectly.\nWhat the plot tells you. Risk-ranked piles protection onto two assets and leaves identity at the floor, which is where the crew goes. Proportional and uniform spread money out but still leave identity as the best target. Only the textbook plan changes the crew’s destination.\n\n\n\nCode\nsm |&gt;\n  filter(strategy %in% four) |&gt;\n  transmute(Strategy = STRAT_LABELS[strategy], Target = ASSET_SHORT[target], Loss = loss_rational) |&gt;\n  gt() |&gt;\n  cols_label(Target = \"Crew target\", Loss = \"Expected loss ($M)\") |&gt;\n  fmt_number(columns = Loss, decimals = 1) |&gt;\n  gt_se()\n\n\n\n\nTable 2: Crew target and our expected loss under each strategy, assuming a perfectly rational crew.\n\n\n\n\n\n\n\n\n\nStrategy\nCrew target\nExpected loss ($M)\n\n\n\n\nRisk-ranked\nIdentity\n13.9\n\n\nProportional\nIdentity\n10.6\n\n\nUniform\nIdentity\n10.5\n\n\nTextbook equilibrium\nCorporate IT\n4.9\n\n\n\n\n\n\n\n\n\n\n\nHow to read the table. Each row is a strategy. The second column is the asset the crew attacks if it picks its best option. The third is our average loss from that attack.\nWhat the table tells you. Risk-ranking has the highest loss. The textbook plan looks far better, but this table assumes we know exactly what the crew wants. Page 4 tests that assumption.",
-    "crumbs": [
-      "Allocation"
-    ]
-  },
-  {
-    "objectID": "02-allocation.html#interpretation",
-    "href": "02-allocation.html#interpretation",
-    "title": "Allocating the Budget",
-    "section": "Interpretation",
-    "text": "Interpretation\nRisk-ranked funds the platform and pipeline and leaves identity at the floor. The crew sees this and goes to identity, for an expected loss of $13.9M.\nThe textbook equilibrium does something cleverer. It sets coverage so that the crew earns the same on 5 of the six assets. It lets the attack fall on corporate IT, a low-impact target, and cuts expected loss to $4.9M.\nThe trick has a price. The crew values the pipeline too little to bother, so the textbook plan holds the pipeline at 25%, the floor. The pipeline is our largest single loss.\nThis is the trap: the plan only works if we’ve read the crew perfectly.",
-    "crumbs": [
-      "Allocation"
-    ]
-  },
-  {
-    "objectID": "02-allocation.html#alignment-check",
-    "href": "02-allocation.html#alignment-check",
-    "title": "Allocating the Budget",
-    "section": "Alignment check",
-    "text": "Alignment check\nWhat if the crew wanted what we fear most? We reran the comparison with crew values proportional to our losses. The textbook plan then costs $13.5M, with the crew attacking identity systems. Risk-ranked costs $23.2M, with the crew attacking client data.\nThe gap does not close. Concentration itself is the problem, not just misreading the attacker: risk-ranked spends heavily on a few assets and leaves the rest cheap to hit, whatever the crew wants.",
-    "crumbs": [
-      "Allocation"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Where Will the Attacker Strike?",
-    "section": "",
-    "text": "All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative and synthetic.",
-    "crumbs": [
-      "Executive Summary"
-    ]
-  },
-  {
-    "objectID": "index.html#the-problem",
-    "href": "index.html#the-problem",
-    "title": "Where Will the Attacker Strike?",
-    "section": "The problem",
-    "text": "The problem\nMost security budgets are ranked: list the risks, fund from the top. That treats the attacker as weather. Ransomware crews adapt. They look at what we defend and go where the payoff is best for them.\nWe study a 500-person fintech firm whose cloud platform is critical infrastructure for its clients. It splits $9.0M a year across six assets, and a ransomware crew picks one to hit. We compare five ways to split the money.",
-    "crumbs": [
-      "Executive Summary"
-    ]
-  },
-  {
-    "objectID": "index.html#three-findings",
-    "href": "index.html#three-findings",
-    "title": "Where Will the Attacker Strike?",
-    "section": "Three findings",
-    "text": "Three findings\n\nRisk-ranking invites the attack. Funding the top risks first leaves identity at baseline coverage, and the crew goes there. If we read the crew perfectly, expected loss is $13.9M against $7.4M for the robust allocation; if we misjudge it, $13.9M against $9.0M.\nThe textbook equilibrium looks best on paper and is worst under uncertainty. If we read the crew perfectly, it cuts loss to $4.9M. If we misjudge the crew modestly, the 95th percentile loss is $46.5M.\nThe robust allocation anticipates the attacker without betting on a perfect read. It cuts expected loss by 35% and the tail by 36% against risk-ranked.\n\n\n\nCode\nord &lt;- ms |&gt; arrange(mean) |&gt; pull(strategy)\nd &lt;- ms |&gt;\n  select(strategy, mean, p95) |&gt;\n  left_join(base |&gt; select(strategy, loss_rational), by = \"strategy\") |&gt;\n  mutate(y = match(strategy, rev(ord)))            # numeric row position, best on top\nbar_h &lt;- 0.34\nggplot(d) +\n  # light bar: crew read perfectly (upper half of each row)\n  geom_rect(aes(xmin = 0, xmax = loss_rational, ymin = y + 0.02, ymax = y + 0.02 + bar_h,\n                fill = strategy), alpha = 0.4) +\n  # dark bar: crew misjudged (lower half of each row)\n  geom_rect(aes(xmin = 0, xmax = mean, ymin = y - 0.02 - bar_h, ymax = y - 0.02,\n                fill = strategy)) +\n  # whisker from the misjudged mean to the 95th percentile\n  geom_segment(aes(x = mean, xend = p95, y = y - 0.02 - bar_h / 2, yend = y - 0.02 - bar_h / 2),\n               color = \"gray25\", linewidth = 0.5) +\n  geom_segment(aes(x = p95, xend = p95, y = y - 0.02 - bar_h * 0.85, yend = y - 0.02 - bar_h * 0.15),\n               color = \"gray25\", linewidth = 0.5) +\n  # labels\n  geom_text(aes(x = loss_rational, y = y + 0.02 + bar_h / 2, label = fmt_m(loss_rational)),\n            hjust = -0.15, size = 3.4, color = \"gray20\") +\n  geom_text(aes(x = mean, y = y - 0.02 - bar_h / 2, label = fmt_m(mean),\n                color = strategy == \"uniform\"),               # dark text on the pale bar\n            hjust = 1.15, size = 3.4, fontface = \"bold\") +\n  scale_color_manual(values = c(`TRUE` = \"gray15\", `FALSE` = \"white\"), guide = \"none\") +\n  geom_text(aes(x = p95, y = y - 0.02 - bar_h / 2, label = paste0(\"1-in-20: \", fmt_m(p95))),\n            hjust = -0.1, size = 3.1, color = \"gray30\") +\n  scale_fill_manual(values = STRAT_COLS, guide = \"none\") +\n  scale_y_continuous(breaks = d$y, labels = STRAT_LABELS[d$strategy], expand = expansion(add = 0.3)) +\n  scale_x_continuous(labels = scales::label_dollar(suffix = \"M\"),\n                     limits = c(0, max(d$p95) * 1.28), expand = expansion(mult = c(0, 0))) +\n  labs(x = \"Expected loss per campaign\", y = NULL,\n       title = \"Robust wins when we are wrong about the crew\",\n       subtitle = \"Light bar: if we read the crew perfectly.  Dark bar: if we misjudge it (line to the 1-in-20 bad case).\") +\n  theme(panel.grid.major.y = element_blank(), panel.grid.minor = element_blank(),\n        plot.subtitle = element_text(size = 10))\n\n\n\n\n\n\n\n\nFigure 1: Expected loss per campaign by strategy, if we read the crew perfectly and if we misjudge it. The line runs to the 1-in-20 bad case.\n\n\n\n\n\n\nHow to read the plot. For each strategy, the light bar is our loss if we read the crew perfectly; the dark bar is our average loss if we misjudge it, and the line runs to the 1-in-20 bad case.\nWhat the plot tells you. The textbook equilibrium has the lowest light bar and the highest dark bar: it is cheapest on paper and costliest when wrong. The robust strategy gives up some of the paper saving and has the lowest average and the shortest line.\n\n\n\n\n\n\n\nNoteQuestions to ask your CISO\n\n\n\n\nWhere does our current plan push an attacker?\nWhich high-impact assets are we under-protecting because we assume attackers don’t want them?\nHow would our allocation perform if our threat intelligence is wrong?\nWhat does the next $1M buy under each approach?",
-    "crumbs": [
-      "Executive Summary"
-    ]
-  },
-  {
-    "objectID": "index.html#how-to-read-this-site",
-    "href": "index.html#how-to-read-this-site",
-    "title": "Where Will the Attacker Strike?",
-    "section": "How to read this site",
-    "text": "How to read this site\n\nThe Game: a two-asset example shows why defending the biggest asset can fail.\nAllocation: the firm, the six assets and four ways to split the budget.\nRobustness: what happens when we misjudge the crew, and the robust strategy.\nGovernance: the assumptions, the limits and the automated checks.",
-    "crumbs": [
-      "Executive Summary"
-    ]
-  },
-  {
-    "objectID": "01-the-game.html",
-    "href": "01-the-game.html",
-    "title": "The Game",
-    "section": "",
-    "text": "All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative.",
-    "crumbs": [
-      "The Game"
-    ]
-  },
-  {
-    "objectID": "01-the-game.html#why-defend-the-most-valuable-asset-fails",
-    "href": "01-the-game.html#why-defend-the-most-valuable-asset-fails",
-    "title": "The Game",
-    "section": "Why “defend the most valuable asset” fails",
-    "text": "Why “defend the most valuable asset” fails\nThe usual budget logic ranks assets by expected loss and funds the top of the list. That logic treats the attacker as weather: a hazard with fixed odds.\nA ransomware crew is not weather. It looks at what we have protected and picks the target that pays best for it. Every dollar we move changes where the crew goes.\nSo a plan can look careful and still invite the attack. If we protect the crown jewel fully, the crew simply goes next door, and the asset we under-protected takes the hit.",
-    "crumbs": [
-      "The Game"
-    ]
-  },
-  {
-    "objectID": "01-the-game.html#a-two-asset-example",
-    "href": "01-the-game.html#a-two-asset-example",
-    "title": "The Game",
-    "section": "A two-asset example",
-    "text": "A two-asset example\nTake two assets. The production platform (PLAT) would cost us $45M if breached. The identity provider (IDP) would cost $18M. The crew values PLAT at $6M and IDP at $7M, so it slightly prefers IDP. We have one unit of coverage to split between them.\nWe compare three plans: protect the crown jewel completely, split coverage in proportion to impact, or play the game and equalize what the crew can gain from each target.\n\n\nCode\ng &lt;- two$grid |&gt;\n  tidyr::pivot_longer(c(PLAT, IDP), names_to = \"target\", values_to = \"payoff\")\nplans &lt;- tibble::tibble(\n  plan = c(\"Crown jewel\", \"Impact-proportional\", \"Equilibrium\"),\n  c_PLAT = c(pl$crown_jewel$coverage[[\"PLAT\"]], pl$impact_proportional$coverage[[\"PLAT\"]], pl$equilibrium$coverage[[\"PLAT\"]]),\n  loss = c(pl$crown_jewel$loss, pl$impact_proportional$loss, pl$equilibrium$loss)\n) |&gt;\n  mutate(\n    payoff = pmax(\n      c_PLAT * a2$A_c[1] + (1 - c_PLAT) * a2$V[1],\n      (1 - c_PLAT) * a2$A_c[2] + c_PLAT * a2$V[2]\n    ),\n    label = paste0(plan, \"\\nloss \", fmt_m(loss))\n  )\nggplot(g, aes(c_PLAT, payoff)) +\n  geom_line(aes(linetype = target, color = target), linewidth = 1) +\n  geom_point(data = plans, size = 3) +\n  ggrepel::geom_label_repel(\n    data = plans, aes(label = label), size = 3.3, min.segment.length = 0,\n    nudge_y = c(-2.3, 0.9, -2.8), nudge_x = c(-0.08, -0.02, 0.1), label.size = 0.2\n  ) +\n  scale_color_manual(values = c(PLAT = \"#4D4D4D\", IDP = \"#7A3E9D\"), name = \"Crew payoff on\") +\n  scale_linetype_manual(values = c(PLAT = \"solid\", IDP = \"dashed\"), name = \"Crew payoff on\") +\n  scale_x_continuous(labels = scales::percent) +\n  labs(x = \"Coverage on PLAT (remainder goes to IDP)\", y = \"Crew payoff ($M)\",\n       title = \"The equilibrium makes the crew indifferent\")\n\n\n\n\n\n\n\n\nFigure 1: The crew’s payoff on each target as coverage shifts from IDP to PLAT. The equilibrium sits where the lines cross.\n\n\n\n\n\n\nHow to read the plot. The horizontal axis shows how much of our one unit of protection goes to the platform; the rest goes to identity. Each line is what the crew would earn attacking that target, and it goes wherever its line is higher. Dots mark three plans.\nWhat the plot tells you. Protecting the crown jewel completely leaves identity open, so the crew goes there and we lose most. The equilibrium sits where the lines cross: the crew gains the same either way, and we pick the point that costs us least. Values are made up, so read the shape.\n\n\n\nCode\ntibble::tibble(\n  Plan = c(\"Protect the crown jewel\", \"Impact-proportional\", \"Equilibrium\"),\n  `Coverage on PLAT` = c(pl$crown_jewel$coverage[[\"PLAT\"]], pl$impact_proportional$coverage[[\"PLAT\"]], pl$equilibrium$coverage[[\"PLAT\"]]),\n  `Coverage on IDP` = c(pl$crown_jewel$coverage[[\"IDP\"]], pl$impact_proportional$coverage[[\"IDP\"]], pl$equilibrium$coverage[[\"IDP\"]]),\n  `Crew target` = c(pl$crown_jewel$target, pl$impact_proportional$target, pl$equilibrium$target),\n  `Defender loss ($M)` = c(pl$crown_jewel$loss, pl$impact_proportional$loss, pl$equilibrium$loss)\n) |&gt;\n  gt() |&gt;\n  fmt_number(columns = starts_with(\"Coverage\"), decimals = 3) |&gt;\n  fmt_number(columns = `Defender loss ($M)`, decimals = 1) |&gt;\n  gt_se()\n\n\n\n\nTable 1: Three plans for the two-asset example: coverage, the crew’s chosen target, and our expected loss.\n\n\n\n\n\n\n\n\n\nPlan\nCoverage on PLAT\nCoverage on IDP\nCrew target\nDefender loss ($M)\n\n\n\n\nProtect the crown jewel\n1.000\n0.000\nIDP\n18.0\n\n\nImpact-proportional\n0.714\n0.286\nIDP\n13.4\n\n\nEquilibrium\n0.448\n0.552\nIDP\n9.1\n\n\n\n\n\n\n\n\n\n\n\nHow to read the table. Each row is one way to split our protection between the two assets. The columns show how much goes to each asset, which asset the crew then attacks, and what the attack costs us on average.\nWhat the table tells you. In every plan the crew attacks the identity provider, because we cannot make the platform and identity equally unattractive without moving coverage toward identity. The plan that anticipates this loses about half as much as the crown-jewel plan. Good protection means steering the crew, not only guarding the biggest asset.",
-    "crumbs": [
-      "The Game"
-    ]
-  },
-  {
-    "objectID": "01-the-game.html#the-setup-in-one-paragraph",
-    "href": "01-the-game.html#the-setup-in-one-paragraph",
-    "title": "The Game",
-    "section": "The setup in one paragraph",
-    "text": "The setup in one paragraph\nWe choose how much coverage each asset gets. The crew sees our choice and attacks the target with the best payoff for it. We pick the coverage that minimizes our loss given that response. This is a Stackelberg game: we move first, the crew moves second. When the crew is indifferent between targets, we assume it breaks the tie in our favor.\n\n\n\n\n\n\nNoteThe math behind the setup\n\n\n\n\n\nCoverage \\(c_t \\in [\\text{floor},\\, c^{max}_t]\\) on target \\(t\\) costs \\(k_t c_t\\), with \\(\\sum_t k_t c_t \\le B\\). Payoffs are\n\\[U_d(t,c) = c_t U_d^c(t) + (1-c_t)U_d^u(t), \\qquad U_a(t,c) = c_t A^c_t + (1-c_t)V_t.\\]\nThe crew picks \\(t^* = \\arg\\max_t U_a(t,c)\\). The textbook equilibrium solves one linear program per candidate target and keeps the best for us.",
-    "crumbs": [
-      "The Game"
-    ]
-  },
-  {
-    "objectID": "01-the-game.html#three-assumptions",
-    "href": "01-the-game.html#three-assumptions",
-    "title": "The Game",
-    "section": "Three assumptions",
-    "text": "Three assumptions\n\nThe crew observes our coverage. It probes before it strikes.\nOur commitment is credible. We do not change the allocation after the crew chooses.\nWe can estimate the crew’s payoffs. This is the weak point. Page 4 relaxes it.",
-    "crumbs": [
-      "The Game"
-    ]
-  },
-  {
-    "objectID": "03-robustness.html",
-    "href": "03-robustness.html",
-    "title": "Misreading the Attacker",
-    "section": "",
-    "text": "All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative.",
-    "crumbs": [
-      "Robustness"
-    ]
-  },
-  {
-    "objectID": "03-robustness.html#why-the-textbook-answer-is-fragile",
-    "href": "03-robustness.html#why-the-textbook-answer-is-fragile",
-    "title": "Misreading the Attacker",
-    "section": "Why the textbook answer is fragile",
-    "text": "Why the textbook answer is fragile\nThe textbook equilibrium works by making the crew exactly indifferent across 5 targets. That razor’s edge is what makes the plan efficient, and also what makes it brittle: when the crew’s real payoffs differ from our estimates, the crew steps off the edge toward the target we left weakest.",
-    "crumbs": [
-      "Robustness"
-    ]
-  },
-  {
-    "objectID": "03-robustness.html#misjudged-payoffs",
-    "href": "03-robustness.html#misjudged-payoffs",
-    "title": "Misreading the Attacker",
-    "section": "Misjudged payoffs",
-    "text": "Misjudged payoffs\nWe drew 3,000 versions of the crew. In each, every success payoff is multiplied by a random error (lognormal, sigma = 0.35). Every strategy faces the same draws.\n\n\nCode\nord &lt;- ms$strategy[order(ms$mean)]\nhits &lt;- draws |&gt;\n  summarise(n = n(), loss = first(loss), .by = c(strategy, target)) |&gt;\n  mutate(share = n / sum(n), .by = strategy) |&gt;\n  mutate(strategy = factor(strategy, levels = rev(ord)),\n         asset = factor(ASSET_SHORT[target], levels = ASSET_SHORT)) |&gt;\n  arrange(strategy, asset) |&gt;\n  mutate(xmid = cumsum(share) - share / 2, .by = strategy)\ncallout &lt;- hits |&gt; filter(target == \"PIPE\", share &gt;= 0.03)   # rare but costly hits\n\nshare_of &lt;- \\(s, a) sum(hits$share[hits$strategy == s & hits$target == a])\nrb_corp  &lt;- share_of(\"robust\", \"CORP\")\ntb_pipe  &lt;- share_of(\"textbook\", \"PIPE\")\n\nggplot(hits, aes(x = share, y = strategy, fill = asset)) +\n  geom_col(width = 0.7, color = \"white\", linewidth = 0.3,\n           position = position_stack(reverse = TRUE)) +\n  geom_text(aes(label = ifelse(share &gt;= 0.08, fmt_m(loss), \"\")),\n            position = position_stack(vjust = 0.5, reverse = TRUE), size = 3, color = \"white\") +\n  geom_text(data = callout, aes(x = xmid, y = strategy, label = fmt_m(loss)),\n            inherit.aes = FALSE, nudge_y = 0.48, size = 3, color = \"#2E7D6B\", fontface = \"bold\") +\n  scale_x_continuous(labels = scales::percent, expand = expansion(mult = c(0, 0.01))) +\n  scale_y_discrete(labels = STRAT_LABELS) +\n  scale_fill_manual(values = ASSET_COLS, name = NULL, drop = FALSE) +\n  guides(fill = guide_legend(nrow = 1)) +\n  labs(x = \"Share of simulated crews\", y = NULL,\n       title = \"Where the crew strikes when we misjudge it\",\n       subtitle = \"Labels show our loss if that asset is hit\") +\n  theme(legend.position = \"top\", panel.grid.major.y = element_blank())\n\n\n\n\n\n\n\n\nFigure 1: Where simulated crews strike under each strategy when their payoffs differ from our estimate. Labels show our loss if that asset is hit.\n\n\n\n\n\n\nHow to read the plot. Each bar is one strategy, ordered from lowest average loss (top) to highest. The colored segments show the share of simulated crews that attack each asset, and the label is what that attack would cost us.\nWhat the plot tells you. Robust funnels 68% of crews onto corporate IT, a cheap hit. The textbook plan scatters them across all six assets, and about one crew in 18 reaches the pipeline, a $46.5M loss.\n\n\n\nCode\nms |&gt;\n  arrange(mean) |&gt;\n  transmute(Strategy = STRAT_LABELS[strategy], mean, p50, p95, p99,\n            Hit = sprintf(\"%s (%s)\", ASSET_SHORT[top_target], fmt_pct(top_share))) |&gt;\n  gt() |&gt;\n  cols_label(mean = \"Mean\", p50 = \"Median\", p95 = \"95th pct.\", p99 = \"99th pct.\", Hit = \"Most-hit asset\") |&gt;\n  tab_spanner(\"Loss ($M)\", columns = c(mean, p50, p95, p99)) |&gt;\n  fmt_number(columns = c(mean, p50, p95, p99), decimals = 1) |&gt;\n  gt_se()\n\n\n\n\nTable 1: Loss statistics when the crew’s payoffs are misjudged, by strategy.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStrategy\n\nLoss ($M)\n\nMost-hit asset\n\n\nMean\nMedian\n95th pct.\n99th pct.\n\n\n\n\nRobust equilibrium\n9.0\n7.4\n14.9\n19.4\nCorporate IT (68%)\n\n\nProportional\n10.7\n10.6\n22.3\n22.3\nIdentity (47%)\n\n\nUniform\n13.3\n10.5\n26.3\n26.3\nIdentity (47%)\n\n\nRisk-ranked\n13.9\n13.9\n23.2\n23.2\nIdentity (56%)\n\n\nTextbook equilibrium\n15.3\n12.9\n46.5\n46.5\nClient data (20%)\n\n\n\n\n\n\n\n\n\n\n\nHow to read the table. Each row is a strategy, sorted by average loss. The loss columns show the average, the middle case, and the bad cases that 1 in 20 and 1 in 100 simulated crews exceed. The last column shows the asset attacked most often and the share of crews that attack it.\nWhat the table tells you. The robust strategy has the lowest average and the smallest bad cases. The textbook equilibrium has the worst average, and its 95th percentile is 3.1 times the robust figure. The crew’s favorite target also differs across strategies.\n\n\n\n\n\n\n\nNoteHow much each strategy relies on a perfect read\n\n\n\nIf our read of the crew is wrong, the robust strategy loses $1.6M more than planned, and the textbook strategy loses $10.3M more. The textbook plan’s efficiency rests almost entirely on accurate intelligence.",
-    "crumbs": [
-      "Robustness"
-    ]
-  },
-  {
-    "objectID": "03-robustness.html#the-robust-equilibrium",
-    "href": "03-robustness.html#the-robust-equilibrium",
-    "title": "Misreading the Attacker",
-    "section": "The robust equilibrium",
-    "text": "The robust equilibrium\nThe robust strategy assumes the crew mostly, but not always, picks the best target. It gives each target a chance of being hit that rises with how attractive it is to the crew, then minimizes our expected loss against those chances. A rationality parameter, \\(\\lambda\\), controls how sharp the crew is.\nWe set \\(\\lambda =\\) 2, chosen on a separate set of simulated crews so the choice is not tuned to the results we report. Optimizing at 2 gives the lowest average loss: $9.13M at 1, $9.03M at 2, $9.83M at 3 and $11.21M at 5.\n\n\n\n\n\n\nNoteThe math behind the equilibrium\n\n\n\n\n\nThe crew attacks target \\(t\\) with probability\n\\[q_t(c) = \\frac{\\exp(\\lambda U_a(t,c))}{\\sum_s \\exp(\\lambda U_a(s,c))}.\\]\nWe minimize \\(f(c) = \\sum_t q_t(c)\\,\\ell_t(c)\\) over feasible coverage, with \\(\\ell_t\\) our loss on target \\(t\\). The gradient is analytic and checked against finite differences. A multistart SLSQP search handles the nonconvexity.",
-    "crumbs": [
-      "Robustness"
-    ]
-  },
-  {
-    "objectID": "03-robustness.html#noisy-attackers",
-    "href": "03-robustness.html#noisy-attackers",
-    "title": "Misreading the Attacker",
-    "section": "Noisy attackers",
-    "text": "Noisy attackers\n\n\nCode\nsweep |&gt;\n  mutate(strategy = factor(strategy, levels = STRAT_ORDER)) |&gt;\n  ggplot(aes(lambda, expected_loss, color = strategy, linetype = strategy)) +\n  geom_line(linewidth = 1) +\n  geom_point(size = 1.8) +\n  scale_x_log10(breaks = LAMBDA_GRID, labels = LAMBDA_GRID) +\n  scale_color_manual(values = STRAT_COLS, labels = STRAT_LABELS, name = NULL) +\n  scale_linetype_manual(values = STRAT_LTY, labels = STRAT_LABELS, name = NULL) +\n  scale_y_continuous(labels = scales::label_dollar(suffix = \"M\")) +\n  labs(x = \"Crew sharpness (lambda, log scale)\", y = \"Expected loss\",\n       title = \"Robust wins unless the crew is nearly random\") +\n  guides(color = guide_legend(nrow = 2))\n\n\n\n\n\n\n\n\nFigure 2: Expected loss against a noisy crew as the crew becomes sharper (higher lambda). Strategies are held fixed.\n\n\n\n\n\n\nHow to read the plot. The horizontal axis shows how sharp the crew is: low values mean it picks targets almost at random, high values mean it always picks its best one. Each line is a strategy whose coverage is fixed. The vertical axis is our expected loss.\nWhat the plot tells you. The robust strategy has the lowest loss once the crew is moderately sharp (2 is our base case; robust leads from 1 upward). For a nearly random crew, simpler plans do slightly better. The textbook equilibrium is worse than robust at every sharpness.",
-    "crumbs": [
-      "Robustness"
-    ]
-  },
-  {
-    "objectID": "03-robustness.html#the-budget-frontier",
-    "href": "03-robustness.html#the-budget-frontier",
-    "title": "Misreading the Attacker",
-    "section": "The budget frontier",
-    "text": "The budget frontier\n\n\nCode\nfr |&gt;\n  mutate(strategy = factor(strategy, levels = STRAT_ORDER)) |&gt;\n  ggplot(aes(budget, mc_mean, color = strategy, linetype = strategy)) +\n  geom_vline(xintercept = BUDGET_BASE, color = \"gray60\", linetype = \"dotted\") +\n  geom_line(linewidth = 1) +\n  scale_color_manual(values = STRAT_COLS, labels = STRAT_LABELS, name = NULL) +\n  scale_linetype_manual(values = STRAT_LTY, labels = STRAT_LABELS, name = NULL) +\n  scale_x_continuous(labels = scales::label_dollar(suffix = \"M\")) +\n  scale_y_continuous(labels = scales::label_dollar(suffix = \"M\")) +\n  labs(x = \"Allocable budget\", y = \"Expected loss if we misjudge the crew\",\n       title = \"Robust stays ahead as the budget grows\") +\n  guides(color = guide_legend(nrow = 2))\n\n\n\n\n\n\n\n\nFigure 3: Expected loss when we misjudge the crew, by budget. The vertical line marks the base budget.\n\n\n\n\n\n\nHow to read the plot. Each line shows average loss by budget for one strategy when we misjudge the crew. The dotted line is our base budget.\nWhat the plot tells you. Robust is lowest at nearly every budget. Extra money can hurt a simple plan: risk-ranked rises from $12.2M at $11.0M to $15.3M at $14.0M, and textbook from $15.3M at $9.0M to $17.0M at $11.0M, as new coverage pushes the crew toward a thin asset. At $5.5M a baseline edges ahead, though robust still beats the sharp crew it is built for. Above $16.5M every asset hits its cap.\n\nMoving from $9.0M to $10.0M lowers the expected loss from misjudging the crew by $0.83M under robust and $1.55M under risk-ranked. Robust still leads at $10.0M: $8.2M against $12.3M. Across the budget grid from $5.0M to $20M, robust is lowest or tied at every budget except $5.5M.\nTry it: move the slider to see how coverage and the crew’s likely target change.\n\n\nCode\nsliderRows = transpose(slider)\n\n\n\n\n\n\n\n\n\nCode\nviewof budget = Inputs.range([5, 20], {step: 0.5, value: 9, label: \"Allocable budget ($M)\"})\n\n\n\n\n\n\n\n\n\nCode\nnow = sliderRows.filter(d =&gt; Math.abs(d.budget - budget) &lt; 1e-9)\n\n\n\n\n\n\n\n\n\nCode\nrr = now.find(d =&gt; d.strategy === \"risk_ranked\")\n\n\n\n\n\n\n\n\n\nCode\nrb = now.find(d =&gt; d.strategy === \"robust\")\n\n\n\n\n\n\n\n\n\nCode\nPlot.plot({\n  marginLeft: 100, marginRight: 30, marginBottom: 45,\n  height: 340,\n  x: {domain: [0, 1], label: \"Coverage\", labelAnchor: \"center\", tickFormat: d =&gt; (d * 100) + \"%\"},\n  fy: {domain: [\"Platform\", \"Pipeline\", \"Client data\", \"Identity\", \"Corporate IT\", \"Vendor\"], label: null},\n  y: {axis: null, domain: [\"Risk-ranked\", \"Robust equilibrium\"]},\n  color: {domain: [\"Risk-ranked\", \"Robust equilibrium\"], range: [\"#4D4D4D\", \"#0166CC\"], legend: true},\n  style: {fontFamily: \"inherit\", fontSize: \"13px\"},\n  marks: [\n    Plot.barX(now, {x: \"coverage\", y: \"strategy_label\", fy: \"asset\", fill: \"strategy_label\"}),\n    Plot.ruleX([0])\n  ]\n})\n\n\n\n\n\n\n\n\n\nCode\nhtml`&lt;div class=\"slider-sentence\"&gt;At &lt;b&gt;$${budget.toFixed(1)}M&lt;/b&gt;, the crew's best target is &lt;b&gt;${rr.target_label}&lt;/b&gt; under risk-ranked and &lt;b&gt;${rb.target_label}&lt;/b&gt; under robust. Expected loss if we misjudge the crew: &lt;b&gt;$${rr.mc_mean.toFixed(1)}M&lt;/b&gt; against &lt;b&gt;$${rb.mc_mean.toFixed(1)}M&lt;/b&gt;.&lt;/div&gt;`\n\n\n\n\n\n\n\n\nHow to read the plot. Drag the slider to choose a budget. Each group of bars is an asset, with the gray bar for risk-ranked coverage and the blue bar for the robust strategy. The sentence under the chart states the crew’s likely target and our expected loss under each approach.\nWhat the plot tells you. As the budget changes, risk-ranked keeps funding the same few assets, while the robust strategy spreads protection toward the places a crew is likely to hit. The sentence shows what that difference costs us.",
-    "crumbs": [
-      "Robustness"
     ]
   }
 ]

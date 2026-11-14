@@ -7,6 +7,7 @@ project:
     - 02-allocation.qmd
     - 03-robustness.qmd
     - 04-governance.qmd
+    - license.qmd
 
 website:
   title: "Where Will the Attacker Strike?"
@@ -27,8 +28,7 @@ website:
       - href: 04-governance.qmd
         text: Governance
   page-footer:
-    center: "Rendered with **R** & **Quarto** | Illustrative synthetic analysis | Not investment or security advice"
-    
+    center: "© 2026 Patrick Lefler ⦁ [MIT License](license.qmd) ⦁ Built with R & Quarto"
 format:
   html:
     code-fold: true
