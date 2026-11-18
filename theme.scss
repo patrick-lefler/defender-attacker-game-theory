@@ -1,5 +1,5 @@
 /*-- scss:rules --*/
-#quarto-sidebar .sidebar-header { display: none; }
+#quarto-sidebar .sidebar-header .sidebar-title { display: none; }
 
 #quarto-sidebar .sidebar-menu-container::before {
   content: "In this project";
