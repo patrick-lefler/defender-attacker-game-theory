@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Allocating the Budget – Where Will the Attacker Strike?</title>
+<title>Allocating the Budget</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -62,6 +62,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <link href="./03-robustness.html" rel="next">
 <link href="./01-the-game.html" rel="prev">
+<link href="./assets/images/favicon.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -73,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9a19a6dc4b25886ecdc4cfc46d632d39.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-30e86a6df980560f791aaab39b7fff61.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -92,11 +93,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -115,13 +116,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="./">Where Will the Attacker Strike?</a> 
-    </div>
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./assets/images/logo.svg" alt="Seeking Eureka" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./assets/images/logo.svg" alt="Seeking Eureka" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
       </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
@@ -162,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">contents</h2>
    
   <ul>
   <li><a href="#the-firm" id="toc-the-firm" class="nav-link active" data-scroll-target="#the-firm">The firm</a></li>
@@ -174,17 +176,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Allocating the Budget</h1>
+<div class="quarto-title-block"><div><h1 class="title">Allocating the Budget</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 <p class="subtitle lead">Where Will the Attacker Strike? Four ways to split a security budget</p>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-body">
 
     
   
@@ -1385,6 +1387,8 @@ Table&nbsp;2: Crew target and our expected loss under each strategy, assuming a 
 <p>The gap does not close. Concentration itself is the problem, not just misreading the attacker: risk-ranked spends heavily on a few assets and leaves the rest cheap to hit, whatever the crew wants.</p>
 
 
+<!-- -->
+
 </section>
 
 </main> <!-- /main -->
@@ -1458,6 +1462,57 @@ Table&nbsp;2: Crew target and our expected loss under each strategy, assuming a 
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1788,7 +1843,7 @@ Table&nbsp;2: Crew target and our expected loss under each strategy, assuming a 
     }
   });
   </script>
-<nav class="page-navigation">
+<nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
       <a href="./01-the-game.html" class="pagination-link" aria-label="The Game">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">The Game</span>
@@ -1799,7 +1854,154 @@ Table&nbsp;2: Crew target and our expected loss under each strategy, assuming a 
         <span class="nav-page-text">Robustness</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Allocating the Budget"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Where Will the Attacker Strike? Four ways to split a security budget"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/00_params.R"</span>); <span class="fu">source</span>(<span class="st">"R/01_utils.R"</span>); <span class="fu">source</span>(<span class="st">"R/90_theme.R"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr); <span class="fu">library</span>(ggplot2); <span class="fu">library</span>(gt)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>assets <span class="ot">&lt;-</span> <span class="fu">load_assets</span>()</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>base <span class="ot">&lt;-</span> <span class="fu">read_result</span>(<span class="st">"strategies_base"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>sm <span class="ot">&lt;-</span> base<span class="sc">$</span>summary</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>al <span class="ot">&lt;-</span> <span class="fu">read_result</span>(<span class="st">"alignment"</span>)<span class="sc">$</span>summary</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>loss_of <span class="ot">&lt;-</span> \(s) sm<span class="sc">$</span>loss_rational[sm<span class="sc">$</span>strategy <span class="sc">==</span> s]</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>target_of <span class="ot">&lt;-</span> \(s) sm<span class="sc">$</span>target[sm<span class="sc">$</span>strategy <span class="sc">==</span> s]</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>cov_of <span class="ot">&lt;-</span> \(s, id) base<span class="sc">$</span>strategies<span class="sc">$</span>coverage[base<span class="sc">$</span>strategies<span class="sc">$</span>strategy <span class="sc">==</span> s <span class="sc">&amp;</span> base<span class="sc">$</span>strategies<span class="sc">$</span>asset_id <span class="sc">==</span> id]</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>nm <span class="ot">&lt;-</span> \(id) ASSET_PROSE[[id]]</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>n_tie <span class="ot">&lt;-</span> <span class="fu">length</span>(base<span class="sc">$</span>textbook_attack_set)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>*All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative.*</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## The firm</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>The firm has 500 staff. Its cloud platform is critical infrastructure for its bank and broker clients. It has <span class="in">`r fmt_m(BUDGET_BASE)`</span> a year to allocate across six assets. That budget includes a hygiene floor: every asset keeps at least <span class="in">`r fmt_pct(COVERAGE_FLOOR)`</span> coverage, because compliance demands it.</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-assets</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "The six assets and their parameters. Illustrative values."</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">log</span>(assets<span class="sc">$</span>L) <span class="sc">-</span> LOSS_SIGMA<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>assets <span class="sc">|&gt;</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">Asset =</span> ASSET_SHORT[asset_id],</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">exp</span>(mu),</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">lo =</span> <span class="fu">exp</span>(mu <span class="sc">-</span> <span class="fl">1.645</span> <span class="sc">*</span> LOSS_SIGMA),</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">hi =</span> <span class="fu">exp</span>(mu <span class="sc">+</span> <span class="fl">1.645</span> <span class="sc">*</span> LOSS_SIGMA),</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci =</span> <span class="fu">sprintf</span>(<span class="st">"%.1f to %.1f"</span>, lo, hi)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Asset, L, median, ci, V, k, c_max, p_heat) <span class="sc">|&gt;</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_spanner</span>(<span class="st">"Defender loss ($M)"</span>, <span class="at">columns =</span> <span class="fu">c</span>(L, median, ci)) <span class="sc">|&gt;</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">L =</span> <span class="st">"Mean"</span>, <span class="at">median =</span> <span class="st">"Median"</span>, <span class="at">ci =</span> <span class="st">"90% interval"</span>, <span class="at">V =</span> <span class="st">"Crew value ($M)"</span>,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>             <span class="at">k =</span> <span class="st">"Cost to cover ($M)"</span>, <span class="at">c_max =</span> <span class="st">"Coverage cap"</span>, <span class="at">p_heat =</span> <span class="st">"Heat-map likelihood"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(L, median, V, k), <span class="at">decimals =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(c_max, p_heat), <span class="at">decimals =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(<span class="st">"Illustrative values. Loss is treated as the mean of a lognormal with sigma = 0.8; median and interval are shown for context only."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>()</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>**How to read the table.** Each row is an asset. The first block is what a successful attack costs us; "crew value" is what the crew gains. "Cost to cover" is the price of full coverage, and the cap is the most protection we can reach.</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>**What the table tells you.** Our biggest loss (the pipeline) is among the crew's least valued targets, while identity is the crew's favorite and costs us far less. The wide 90% intervals warn that a typical loss can differ greatly from the average.</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where we and the crew disagree</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-divergence</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Rank of each asset by our loss against rank by the crew's value. Distance from the diagonal measures disagreement."</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "Scatter plot of six assets by rank of defender loss on the horizontal axis and rank of crew value on the vertical axis, with a diagonal reference line. Pipeline and identity lie far from the line; platform lies on it."</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>assets <span class="sc">|&gt;</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank_L =</span> <span class="fu">rank</span>(L), <span class="at">rank_V =</span> <span class="fu">rank</span>(V), <span class="at">label =</span> ASSET_SHORT[asset_id]) <span class="sc">|&gt;</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(rank_L, rank_V)) <span class="sc">+</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray50"</span>) <span class="sc">+</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">3.5</span>, <span class="at">color =</span> <span class="st">"#0166CC"</span>) <span class="sc">+</span></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">6.3</span>)) <span class="sc">+</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">6.3</span>)) <span class="sc">+</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Rank by our loss (6 = largest)"</span>, <span class="at">y =</span> <span class="st">"Rank by crew value (6 = most attractive)"</span>,</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Our biggest worries are not the crew's favorites"</span>)</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>**How to read the plot.** Each dot is an asset. Moving right means a larger loss for us; moving up means more attractive to the crew. The dashed diagonal marks assets where both sides agree on the ranking.</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>**What the plot tells you.** The pipeline is our largest loss but ranks last for the crew, so the crew has little reason to attack it. Identity is the reverse. A plan built only on our own risk ranking will misjudge where the crew goes.</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Four strategies at the base budget</span></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>We compare four ways to spend <span class="in">`r fmt_m(BUDGET_BASE)`</span>. The robust strategy joins on page 4.</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-coverage-small-multiples</span></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Coverage by asset under four strategies. The crew's chosen target is highlighted in each panel."</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "Four bar-chart panels, one per strategy, showing coverage on each of six assets. The attacked asset is highlighted: identity for risk-ranked, proportional and uniform, and corporate IT for the textbook equilibrium."</span></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>four <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"risk_ranked"</span>, <span class="st">"proportional"</span>, <span class="st">"uniform"</span>, <span class="st">"textbook"</span>)</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>base<span class="sc">$</span>strategies <span class="sc">|&gt;</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(strategy <span class="sc">%in%</span> four) <span class="sc">|&gt;</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sm <span class="sc">|&gt;</span> <span class="fu">select</span>(strategy, target), <span class="at">by =</span> <span class="st">"strategy"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>    <span class="at">strategy =</span> <span class="fu">factor</span>(STRAT_LABELS[strategy], <span class="at">levels =</span> STRAT_LABELS[four]),</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>    <span class="at">asset =</span> <span class="fu">factor</span>(ASSET_SHORT[asset_id], <span class="at">levels =</span> ASSET_SHORT),</span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>    <span class="at">hit =</span> <span class="fu">ifelse</span>(asset_id <span class="sc">==</span> target, <span class="st">"Crew's target"</span>, <span class="st">"Other asset"</span>)</span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(asset, coverage, <span class="at">fill =</span> hit)) <span class="sc">+</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>strategy, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Crew's target"</span> <span class="ot">=</span> <span class="st">"#7A3E9D"</span>, <span class="st">"Other asset"</span> <span class="ot">=</span> <span class="st">"#C8C8C8"</span>), <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Coverage"</span>) <span class="sc">+</span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">30</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>**How to read the plot.** Each panel is one way to split the budget. Bars show how much of each asset is protected. The purple bar is the asset the crew would attack if it reads our defenses perfectly.</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>**What the plot tells you.** Risk-ranked piles protection onto two assets and leaves identity at the floor, which is where the crew goes. Proportional and uniform spread money out but still leave identity as the best target. Only the textbook plan changes the crew's destination.</span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-strategy-summary</span></span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Crew target and our expected loss under each strategy, assuming a perfectly rational crew."</span></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>sm <span class="sc">|&gt;</span></span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(strategy <span class="sc">%in%</span> four) <span class="sc">|&gt;</span></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">Strategy =</span> STRAT_LABELS[strategy], <span class="at">Target =</span> ASSET_SHORT[target], <span class="at">Loss =</span> loss_rational) <span class="sc">|&gt;</span></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">Target =</span> <span class="st">"Crew target"</span>, <span class="at">Loss =</span> <span class="st">"Expected loss ($M)"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> Loss, <span class="at">decimals =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>()</span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>**How to read the table.** Each row is a strategy. The second column is the asset the crew attacks if it picks its best option. The third is our average loss from that attack.</span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>**What the table tells you.** Risk-ranking has the highest loss. The textbook plan looks far better, but this table assumes we know exactly what the crew wants. Page 4 tests that assumption.</span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpretation</span></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a>Risk-ranked funds the platform and pipeline and leaves identity at the floor. The crew sees this and goes to identity, for an expected loss of <span class="in">`r fmt_m(loss_of("risk_ranked"))`</span>.</span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>The textbook equilibrium does something cleverer. It sets coverage so that the crew earns the same on <span class="in">`r n_tie`</span> of the six assets. It lets the attack fall on <span class="in">`r nm(target_of("textbook"))`</span>, a low-impact target, and cuts expected loss to <span class="in">`r fmt_m(loss_of("textbook"))`</span>.</span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a>The trick has a price. The crew values the pipeline too little to bother, so the textbook plan holds the pipeline at <span class="in">`r fmt_pct(cov_of("textbook", "PIPE"))`</span>, the floor. The pipeline is our largest single loss.</span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a>This is the trap: the plan only works if we've read the crew perfectly.</span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Alignment check</span></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>What if the crew wanted what we fear most? We reran the comparison with crew values proportional to our losses. The textbook plan then costs <span class="in">`r fmt_m(al$loss_rational[al$strategy == "textbook"])`</span>, with the crew attacking <span class="in">`r nm(al$target[al$strategy == "textbook"])`</span>. Risk-ranked costs <span class="in">`r fmt_m(al$loss_rational[al$strategy == "risk_ranked"])`</span>, with the crew attacking <span class="in">`r nm(al$target[al$strategy == "risk_ranked"])`</span>.</span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>The gap does not close. Concentration itself is the problem, not just misreading the attacker: risk-ranked spends heavily on a few assets and leaves the rest cheap to hit, whatever the crew wants.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1850,4 +2052,5 @@ Table&nbsp;2: Crew target and our expected loss under each strategy, assuming a 
 
 
 
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
