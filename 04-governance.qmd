@@ -1,16 +1,13 @@
 ---
 title: "Governance & Audit"
-subtitle: "Where Will the Attacker Strike? Assumptions, limits and checks"
+subtitle: "Where Will the Attacker Strike? Assumptions and limits"
 ---
 
 ```{r}
 #| include: false
 source("R/00_params.R"); source("R/01_utils.R"); source("R/90_theme.R")
 library(dplyr); library(ggplot2); library(gt)
-diag <- read_result("diagnostics")
-si <- read_result("session_info")
 reg <- readr::read_csv(file.path(PROJECT_ROOT, "data", "assumptions_register.csv"), show_col_types = FALSE)
-n_pass <- sum(diag$result == "pass")
 sens <- read_result("sensitivity")
 n_rob <- sum(sens$best == "robust")
 ```
@@ -81,54 +78,4 @@ Natural follow-ons are repeated play, mixtures of attacker types, and the attack
 
 For a framework that tests any risk model, see [Three Questions for Any Risk Model](https://patrick-lefler.com/rQuarto_three_questions_for_any_risk_model_2026-10-22/).
 
-## Diagnostics
-
-All `r nrow(diag)` automated checks ran when the results were built; `r n_pass` passed.
-
-```{r}
-#| label: tbl-diagnostics
-#| tbl-cap: "Automated checks run when the results were built."
-diag |>
-  gt() |>
-  cols_label(check = "Check", result = "Result", detail = "Detail") |>
-  gt_se() |>
-  cols_align(align = "left")
-```
-
-::: {.reader-note}
-**How to read the table.** Each row is a test of the calculations. "Pass" means the check met its standard. The detail column states what was checked.
-
-**What the table tells you.** The checks cover the solver, the robust optimizer, the budget, and the Monte Carlo draws.
-
-:::
-
-```{r}
-#| label: tbl-session
-#| tbl-cap: "Software versions and seed used to build the results."
-tibble::tibble(
-  Item = c("R", "Seed", names(si$packages)),
-  Value = c(si$r_version, as.character(si$seed), unname(si$packages))
-) |>
-  gt() |>
-  gt_se() |>
-  cols_align(align = "left")
-```
-
-::: {.reader-note}
-**How to read the table.** The first row is the R version, the second the random seed, and the rest are the software packages that matter for the results.
-
-**What the table tells you.** Anyone with these versions and seed can reproduce the numbers on this site exactly. A different seed gives slightly different Monte Carlo results.
-:::
-
-**Reproduce.** Code and data: [GitHub repository](https://github.com/patrick-lefler/rQuarto_defender_attacker-game_theory). From the project root run `Rscript R/run_all.R`, then `quarto render`.
-
-## Session Information
-
-::: {.callout-note icon = false collapse="true"}
-## Full R session information
-```{r}
-#| label: session-information
-#| echo: false
-sessioninfo::session_info()
-```
-:::
+The automated checks, unit tests, input checksums and software versions behind these results are on the [Reproducibility](reproducibility.qmd) page.
