@@ -20,7 +20,7 @@ Every number on this site comes from synthetic inputs in `params.yaml` and `data
 
 ## Quick start {#quick-start}
 
-1.  Clone the [GitHub repository](https://github.com/patrick-lefler/rQuarto_defender_attacker-game_theory) and open the project folder in RStudio or Positron.
+1.  Clone the [GitHub repository](https://github.com/patrick-lefler/defender-attacker-game-theory) and open the project folder in RStudio or Positron.
 2.  Restore the packages with `renv::restore()` (see [Software environment](#environment)). You need R 4.3 or later and Quarto 1.5 or later.
 3.  From a terminal in the project root, rebuild the results, run the tests and render the site:
 
