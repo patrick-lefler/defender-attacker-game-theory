@@ -60,6 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
+<link href="./reproducibility.html" rel="next">
 <link href="./03-robustness.html" rel="prev">
 <link href="./assets/images/favicon.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -73,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ca758389ed1120b27d1d2c73de755b30.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b45a8054ba6499b4e4358f2af7238a19.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -153,6 +154,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Governance</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reproducibility</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -168,8 +175,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sensitivity" id="toc-sensitivity" class="nav-link" data-scroll-target="#sensitivity">Sensitivity</a></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
-  <li><a href="#diagnostics" id="toc-diagnostics" class="nav-link" data-scroll-target="#diagnostics">Diagnostics</a></li>
-  <li><a href="#session-information" id="toc-session-information" class="nav-link" data-scroll-target="#session-information">Session Information</a></li>
   </ul>
 </nav>
     </div>
@@ -179,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Governance &amp; Audit</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
-<p class="subtitle lead">Where Will the Attacker Strike? Assumptions, limits and checks</p>
+<p class="subtitle lead">Where Will the Attacker Strike? Assumptions and limits</p>
 </div>
 
 
@@ -221,23 +226,23 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
 </figcaption>
 <div aria-describedby="tbl-assumptions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="cpfdgclzcy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#cpfdgclzcy table {
+<div id="kvchnoqjcl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kvchnoqjcl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#cpfdgclzcy thead, #cpfdgclzcy tbody, #cpfdgclzcy tfoot, #cpfdgclzcy tr, #cpfdgclzcy td, #cpfdgclzcy th {
+#kvchnoqjcl thead, #kvchnoqjcl tbody, #kvchnoqjcl tfoot, #kvchnoqjcl tr, #kvchnoqjcl td, #kvchnoqjcl th {
   border-style: none;
 }
 
-#cpfdgclzcy p {
+#kvchnoqjcl p {
   margin: 0;
   padding: 0;
 }
 
-#cpfdgclzcy .gt_table {
+#kvchnoqjcl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -263,12 +268,12 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-left-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_caption {
+#kvchnoqjcl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#cpfdgclzcy .gt_title {
+#kvchnoqjcl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -280,7 +285,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-bottom-width: 0;
 }
 
-#cpfdgclzcy .gt_subtitle {
+#kvchnoqjcl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -292,7 +297,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-top-width: 0;
 }
 
-#cpfdgclzcy .gt_heading {
+#kvchnoqjcl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -304,13 +309,13 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-right-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_bottom_border {
+#kvchnoqjcl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_col_headings {
+#kvchnoqjcl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -325,7 +330,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-right-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_col_heading {
+#kvchnoqjcl .gt_col_heading {
   color: #333333;
   background-color: #F2F2F2;
   font-size: 100%;
@@ -345,7 +350,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   overflow-x: hidden;
 }
 
-#cpfdgclzcy .gt_column_spanner_outer {
+#kvchnoqjcl .gt_column_spanner_outer {
   color: #333333;
   background-color: #F2F2F2;
   font-size: 100%;
@@ -357,15 +362,15 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   padding-right: 4px;
 }
 
-#cpfdgclzcy .gt_column_spanner_outer:first-child {
+#kvchnoqjcl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cpfdgclzcy .gt_column_spanner_outer:last-child {
+#kvchnoqjcl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cpfdgclzcy .gt_column_spanner {
+#kvchnoqjcl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -377,11 +382,11 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   width: 100%;
 }
 
-#cpfdgclzcy .gt_spanner_row {
+#kvchnoqjcl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#cpfdgclzcy .gt_group_heading {
+#kvchnoqjcl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -407,7 +412,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   text-align: left;
 }
 
-#cpfdgclzcy .gt_empty_group_heading {
+#kvchnoqjcl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -422,15 +427,15 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   vertical-align: middle;
 }
 
-#cpfdgclzcy .gt_from_md > :first-child {
+#kvchnoqjcl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cpfdgclzcy .gt_from_md > :last-child {
+#kvchnoqjcl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cpfdgclzcy .gt_row {
+#kvchnoqjcl .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -449,7 +454,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   overflow-x: hidden;
 }
 
-#cpfdgclzcy .gt_stub {
+#kvchnoqjcl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -462,7 +467,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   padding-right: 5px;
 }
 
-#cpfdgclzcy .gt_stub_row_group {
+#kvchnoqjcl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -476,15 +481,15 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   vertical-align: top;
 }
 
-#cpfdgclzcy .gt_row_group_first td {
+#kvchnoqjcl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#cpfdgclzcy .gt_row_group_first th {
+#kvchnoqjcl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#cpfdgclzcy .gt_summary_row {
+#kvchnoqjcl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -494,16 +499,16 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   padding-right: 5px;
 }
 
-#cpfdgclzcy .gt_first_summary_row {
+#kvchnoqjcl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_first_summary_row.thick {
+#kvchnoqjcl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#cpfdgclzcy .gt_last_summary_row {
+#kvchnoqjcl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -513,7 +518,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-bottom-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_grand_summary_row {
+#kvchnoqjcl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -523,7 +528,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   padding-right: 5px;
 }
 
-#cpfdgclzcy .gt_first_grand_summary_row {
+#kvchnoqjcl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -533,7 +538,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-top-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_last_grand_summary_row_top {
+#kvchnoqjcl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -543,11 +548,11 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-bottom-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_striped {
+#kvchnoqjcl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cpfdgclzcy .gt_table_body {
+#kvchnoqjcl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -556,7 +561,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-bottom-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_footnotes {
+#kvchnoqjcl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -570,7 +575,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-right-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_footnote {
+#kvchnoqjcl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -579,7 +584,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   padding-right: 5px;
 }
 
-#cpfdgclzcy .gt_sourcenotes {
+#kvchnoqjcl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -593,7 +598,7 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   border-right-color: #D3D3D3;
 }
 
-#cpfdgclzcy .gt_sourcenote {
+#kvchnoqjcl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -601,72 +606,72 @@ Table&nbsp;1: Assumptions behind the analysis, why each matters, how it could fa
   padding-right: 5px;
 }
 
-#cpfdgclzcy .gt_left {
+#kvchnoqjcl .gt_left {
   text-align: left;
 }
 
-#cpfdgclzcy .gt_center {
+#kvchnoqjcl .gt_center {
   text-align: center;
 }
 
-#cpfdgclzcy .gt_right {
+#kvchnoqjcl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cpfdgclzcy .gt_font_normal {
+#kvchnoqjcl .gt_font_normal {
   font-weight: normal;
 }
 
-#cpfdgclzcy .gt_font_bold {
+#kvchnoqjcl .gt_font_bold {
   font-weight: bold;
 }
 
-#cpfdgclzcy .gt_font_italic {
+#kvchnoqjcl .gt_font_italic {
   font-style: italic;
 }
 
-#cpfdgclzcy .gt_super {
+#kvchnoqjcl .gt_super {
   font-size: 65%;
 }
 
-#cpfdgclzcy .gt_footnote_marks {
+#kvchnoqjcl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#cpfdgclzcy .gt_asterisk {
+#kvchnoqjcl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#cpfdgclzcy .gt_indent_1 {
+#kvchnoqjcl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#cpfdgclzcy .gt_indent_2 {
+#kvchnoqjcl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#cpfdgclzcy .gt_indent_3 {
+#kvchnoqjcl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#cpfdgclzcy .gt_indent_4 {
+#kvchnoqjcl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#cpfdgclzcy .gt_indent_5 {
+#kvchnoqjcl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#cpfdgclzcy .katex-display {
+#kvchnoqjcl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#cpfdgclzcy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kvchnoqjcl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -801,23 +806,23 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
 </figcaption>
 <div aria-describedby="tbl-sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="nxxvcdthrc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nxxvcdthrc table {
+<div id="fwzrqqmfzc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fwzrqqmfzc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nxxvcdthrc thead, #nxxvcdthrc tbody, #nxxvcdthrc tfoot, #nxxvcdthrc tr, #nxxvcdthrc td, #nxxvcdthrc th {
+#fwzrqqmfzc thead, #fwzrqqmfzc tbody, #fwzrqqmfzc tfoot, #fwzrqqmfzc tr, #fwzrqqmfzc td, #fwzrqqmfzc th {
   border-style: none;
 }
 
-#nxxvcdthrc p {
+#fwzrqqmfzc p {
   margin: 0;
   padding: 0;
 }
 
-#nxxvcdthrc .gt_table {
+#fwzrqqmfzc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -843,12 +848,12 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-left-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_caption {
+#fwzrqqmfzc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nxxvcdthrc .gt_title {
+#fwzrqqmfzc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -860,7 +865,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-bottom-width: 0;
 }
 
-#nxxvcdthrc .gt_subtitle {
+#fwzrqqmfzc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -872,7 +877,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-top-width: 0;
 }
 
-#nxxvcdthrc .gt_heading {
+#fwzrqqmfzc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -884,13 +889,13 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-right-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_bottom_border {
+#fwzrqqmfzc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_col_headings {
+#fwzrqqmfzc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -905,7 +910,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-right-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_col_heading {
+#fwzrqqmfzc .gt_col_heading {
   color: #333333;
   background-color: #F2F2F2;
   font-size: 100%;
@@ -925,7 +930,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   overflow-x: hidden;
 }
 
-#nxxvcdthrc .gt_column_spanner_outer {
+#fwzrqqmfzc .gt_column_spanner_outer {
   color: #333333;
   background-color: #F2F2F2;
   font-size: 100%;
@@ -937,15 +942,15 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   padding-right: 4px;
 }
 
-#nxxvcdthrc .gt_column_spanner_outer:first-child {
+#fwzrqqmfzc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nxxvcdthrc .gt_column_spanner_outer:last-child {
+#fwzrqqmfzc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nxxvcdthrc .gt_column_spanner {
+#fwzrqqmfzc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -957,11 +962,11 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   width: 100%;
 }
 
-#nxxvcdthrc .gt_spanner_row {
+#fwzrqqmfzc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#nxxvcdthrc .gt_group_heading {
+#fwzrqqmfzc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -987,7 +992,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   text-align: left;
 }
 
-#nxxvcdthrc .gt_empty_group_heading {
+#fwzrqqmfzc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1002,15 +1007,15 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   vertical-align: middle;
 }
 
-#nxxvcdthrc .gt_from_md > :first-child {
+#fwzrqqmfzc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nxxvcdthrc .gt_from_md > :last-child {
+#fwzrqqmfzc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nxxvcdthrc .gt_row {
+#fwzrqqmfzc .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -1029,7 +1034,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   overflow-x: hidden;
 }
 
-#nxxvcdthrc .gt_stub {
+#fwzrqqmfzc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1042,7 +1047,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   padding-right: 5px;
 }
 
-#nxxvcdthrc .gt_stub_row_group {
+#fwzrqqmfzc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1056,15 +1061,15 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   vertical-align: top;
 }
 
-#nxxvcdthrc .gt_row_group_first td {
+#fwzrqqmfzc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nxxvcdthrc .gt_row_group_first th {
+#fwzrqqmfzc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#nxxvcdthrc .gt_summary_row {
+#fwzrqqmfzc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1074,16 +1079,16 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   padding-right: 5px;
 }
 
-#nxxvcdthrc .gt_first_summary_row {
+#fwzrqqmfzc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_first_summary_row.thick {
+#fwzrqqmfzc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nxxvcdthrc .gt_last_summary_row {
+#fwzrqqmfzc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1093,7 +1098,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-bottom-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_grand_summary_row {
+#fwzrqqmfzc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1103,7 +1108,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   padding-right: 5px;
 }
 
-#nxxvcdthrc .gt_first_grand_summary_row {
+#fwzrqqmfzc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1113,7 +1118,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-top-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_last_grand_summary_row_top {
+#fwzrqqmfzc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1123,11 +1128,11 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-bottom-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_striped {
+#fwzrqqmfzc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nxxvcdthrc .gt_table_body {
+#fwzrqqmfzc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1136,7 +1141,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-bottom-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_footnotes {
+#fwzrqqmfzc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1150,7 +1155,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-right-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_footnote {
+#fwzrqqmfzc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1159,7 +1164,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   padding-right: 5px;
 }
 
-#nxxvcdthrc .gt_sourcenotes {
+#fwzrqqmfzc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1173,7 +1178,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   border-right-color: #D3D3D3;
 }
 
-#nxxvcdthrc .gt_sourcenote {
+#fwzrqqmfzc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1181,72 +1186,72 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
   padding-right: 5px;
 }
 
-#nxxvcdthrc .gt_left {
+#fwzrqqmfzc .gt_left {
   text-align: left;
 }
 
-#nxxvcdthrc .gt_center {
+#fwzrqqmfzc .gt_center {
   text-align: center;
 }
 
-#nxxvcdthrc .gt_right {
+#fwzrqqmfzc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nxxvcdthrc .gt_font_normal {
+#fwzrqqmfzc .gt_font_normal {
   font-weight: normal;
 }
 
-#nxxvcdthrc .gt_font_bold {
+#fwzrqqmfzc .gt_font_bold {
   font-weight: bold;
 }
 
-#nxxvcdthrc .gt_font_italic {
+#fwzrqqmfzc .gt_font_italic {
   font-style: italic;
 }
 
-#nxxvcdthrc .gt_super {
+#fwzrqqmfzc .gt_super {
   font-size: 65%;
 }
 
-#nxxvcdthrc .gt_footnote_marks {
+#fwzrqqmfzc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#nxxvcdthrc .gt_asterisk {
+#fwzrqqmfzc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nxxvcdthrc .gt_indent_1 {
+#fwzrqqmfzc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nxxvcdthrc .gt_indent_2 {
+#fwzrqqmfzc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nxxvcdthrc .gt_indent_3 {
+#fwzrqqmfzc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nxxvcdthrc .gt_indent_4 {
+#fwzrqqmfzc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nxxvcdthrc .gt_indent_5 {
+#fwzrqqmfzc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#nxxvcdthrc .katex-display {
+#fwzrqqmfzc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#nxxvcdthrc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fwzrqqmfzc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1358,1141 +1363,7 @@ Table&nbsp;2: Expected loss if we misjudge the crew, with one assumption changed
 <section id="further-reading" class="level2">
 <h2 class="anchored" data-anchor-id="further-reading">Further reading</h2>
 <p>For a framework that tests any risk model, see <a href="https://patrick-lefler.com/rQuarto_three_questions_for_any_risk_model_2026-10-22/">Three Questions for Any Risk Model</a>.</p>
-</section>
-<section id="diagnostics" class="level2">
-<h2 class="anchored" data-anchor-id="diagnostics">Diagnostics</h2>
-<p>All 7 automated checks ran when the results were built; 7 passed.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diag <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">check =</span> <span class="st">"Check"</span>, <span class="at">result =</span> <span class="st">"Result"</span>, <span class="at">detail =</span> <span class="st">"Detail"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>() <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"left"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div id="tbl-diagnostics" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3: Automated checks run when the results were built.
-</figcaption>
-<div aria-describedby="tbl-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<div id="douafijskn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#douafijskn table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#douafijskn thead, #douafijskn tbody, #douafijskn tfoot, #douafijskn tr, #douafijskn td, #douafijskn th {
-  border-style: none;
-}
-
-#douafijskn p {
-  margin: 0;
-  padding: 0;
-}
-
-#douafijskn .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 13px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: none;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#douafijskn .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#douafijskn .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#douafijskn .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#douafijskn .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#douafijskn .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#douafijskn .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#douafijskn .gt_col_heading {
-  color: #333333;
-  background-color: #F2F2F2;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#douafijskn .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #F2F2F2;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#douafijskn .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#douafijskn .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#douafijskn .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#douafijskn .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#douafijskn .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#douafijskn .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#douafijskn .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#douafijskn .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#douafijskn .gt_row {
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#douafijskn .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#douafijskn .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#douafijskn .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#douafijskn .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#douafijskn .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#douafijskn .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#douafijskn .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#douafijskn .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#douafijskn .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#douafijskn .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#douafijskn .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#douafijskn .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#douafijskn .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#douafijskn .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#douafijskn .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#douafijskn .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#douafijskn .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#douafijskn .gt_left {
-  text-align: left;
-}
-
-#douafijskn .gt_center {
-  text-align: center;
-}
-
-#douafijskn .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#douafijskn .gt_font_normal {
-  font-weight: normal;
-}
-
-#douafijskn .gt_font_bold {
-  font-weight: bold;
-}
-
-#douafijskn .gt_font_italic {
-  font-style: italic;
-}
-
-#douafijskn .gt_super {
-  font-size: 65%;
-}
-
-#douafijskn .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#douafijskn .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#douafijskn .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#douafijskn .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#douafijskn .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#douafijskn .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#douafijskn .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#douafijskn .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#douafijskn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="check" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Check</th>
-<th id="result" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Result</th>
-<th id="detail" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Detail</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="check">SSE LPs solved without solver error</td>
-<td class="gt_row gt_left" headers="result">pass</td>
-<td class="gt_row gt_left" headers="detail">31 budgets on the grid, every LP optimal or infeasible</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="check">Best-response consistency</td>
-<td class="gt_row gt_left" headers="result">pass</td>
-<td class="gt_row gt_left" headers="detail">155 strategy-budget pairs rechecked</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="check">Budget constraint binding</td>
-<td class="gt_row gt_left" headers="result">pass</td>
-<td class="gt_row gt_left" headers="detail">Baselines bind where B &lt;= 16.4. Textbook leaves slack at 5 budgets (max 2.37); robust at 1 (max 0.13, no improving move)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="check">Two-asset analytic match</td>
-<td class="gt_row gt_left" headers="result">pass</td>
-<td class="gt_row gt_left" headers="detail">PLAT coverage 0.4483 vs analytic 0.4483</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="check">Gradient check</td>
-<td class="gt_row gt_left" headers="result">pass</td>
-<td class="gt_row gt_left" headers="detail">max abs error 7.7e-09 at five points</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="check">Monte Carlo stability (seed + 1)</td>
-<td class="gt_row gt_left" headers="result">pass</td>
-<td class="gt_row gt_left" headers="detail">max change in mean 1.0%; ranking unchanged</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="check">Robust minimizes the QRE objective at every budget</td>
-<td class="gt_row gt_left" headers="result">pass</td>
-<td class="gt_row gt_left" headers="detail">Robust lowest or tied at all 31 budgets; closest call at $5.5M: robust 13.54 vs best other 13.92</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</figure>
-</div>
-</div>
-<div class="reader-note">
-<p><strong>How to read the table.</strong> Each row is a test of the calculations. “Pass” means the check met its standard. The detail column states what was checked.</p>
-<p><strong>What the table tells you.</strong> The checks cover the solver, the robust optimizer, the budget, and the Monte Carlo draws.</p>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item =</span> <span class="fu">c</span>(<span class="st">"R"</span>, <span class="st">"Seed"</span>, <span class="fu">names</span>(si<span class="sc">$</span>packages)),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(si<span class="sc">$</span>r_version, <span class="fu">as.character</span>(si<span class="sc">$</span>seed), <span class="fu">unname</span>(si<span class="sc">$</span>packages))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"left"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div id="tbl-session" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-session-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4: Software versions and seed used to build the results.
-</figcaption>
-<div aria-describedby="tbl-session-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<div id="vvpllgwvfg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vvpllgwvfg table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#vvpllgwvfg thead, #vvpllgwvfg tbody, #vvpllgwvfg tfoot, #vvpllgwvfg tr, #vvpllgwvfg td, #vvpllgwvfg th {
-  border-style: none;
-}
-
-#vvpllgwvfg p {
-  margin: 0;
-  padding: 0;
-}
-
-#vvpllgwvfg .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 13px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: none;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#vvpllgwvfg .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#vvpllgwvfg .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#vvpllgwvfg .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_col_heading {
-  color: #333333;
-  background-color: #F2F2F2;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#vvpllgwvfg .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #F2F2F2;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#vvpllgwvfg .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#vvpllgwvfg .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#vvpllgwvfg .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#vvpllgwvfg .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#vvpllgwvfg .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#vvpllgwvfg .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#vvpllgwvfg .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#vvpllgwvfg .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#vvpllgwvfg .gt_row {
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#vvpllgwvfg .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#vvpllgwvfg .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#vvpllgwvfg .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#vvpllgwvfg .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#vvpllgwvfg .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#vvpllgwvfg .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#vvpllgwvfg .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#vvpllgwvfg .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#vvpllgwvfg .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#vvpllgwvfg .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#vvpllgwvfg .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#vvpllgwvfg .gt_left {
-  text-align: left;
-}
-
-#vvpllgwvfg .gt_center {
-  text-align: center;
-}
-
-#vvpllgwvfg .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#vvpllgwvfg .gt_font_normal {
-  font-weight: normal;
-}
-
-#vvpllgwvfg .gt_font_bold {
-  font-weight: bold;
-}
-
-#vvpllgwvfg .gt_font_italic {
-  font-style: italic;
-}
-
-#vvpllgwvfg .gt_super {
-  font-size: 65%;
-}
-
-#vvpllgwvfg .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#vvpllgwvfg .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#vvpllgwvfg .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#vvpllgwvfg .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#vvpllgwvfg .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#vvpllgwvfg .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#vvpllgwvfg .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#vvpllgwvfg .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#vvpllgwvfg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="Item" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Item</th>
-<th id="Value" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Value</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="Item">R</td>
-<td class="gt_row gt_left" headers="Value">R version 4.5.2 (2025-10-31)</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Item">Seed</td>
-<td class="gt_row gt_left" headers="Value">20261103</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Item">highs</td>
-<td class="gt_row gt_left" headers="Value">1.15.1.2</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Item">nloptr</td>
-<td class="gt_row gt_left" headers="Value">2.2.1</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Item">dplyr</td>
-<td class="gt_row gt_left" headers="Value">1.2.1</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Item">ggplot2</td>
-<td class="gt_row gt_left" headers="Value">4.0.3</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Item">gt</td>
-<td class="gt_row gt_left" headers="Value">1.3.0</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Item">testthat</td>
-<td class="gt_row gt_left" headers="Value">3.3.2</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</figure>
-</div>
-</div>
-<div class="reader-note">
-<p><strong>How to read the table.</strong> The first row is the R version, the second the random seed, and the rest are the software packages that matter for the results.</p>
-<p><strong>What the table tells you.</strong> Anyone with these versions and seed can reproduce the numbers on this site exactly. A different seed gives slightly different Monte Carlo results.</p>
-</div>
-<p><strong>Reproduce.</strong> Code and data: <a href="https://github.com/patrick-lefler/rQuarto_defender_attacker-game_theory">GitHub repository</a>. From the project root run <code>Rscript R/run_all.R</code>, then <code>quarto render</code>.</p>
-</section>
-<section id="session-information" class="level2">
-<h2 class="anchored" data-anchor-id="session-information">Session Information</h2>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Full R session information
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>─ Session info ───────────────────────────────────────────────────────────────
- setting  value
- version  R version 4.5.2 (2025-10-31)
- os       macOS Tahoe 26.6.2
- system   aarch64, darwin20
- ui       X11
- language (EN)
- collate  en_US.UTF-8
- ctype    en_US.UTF-8
- tz       America/New_York
- date     2026-11-16
- pandoc   3.10 @ /Applications/Positron.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown)
- quarto   1.8.26 @ /Applications/quarto/bin/quarto
-
-─ Packages ───────────────────────────────────────────────────────────────────
- package      * version date (UTC) lib source
- archive        1.1.12  2025-03-20 [1] CRAN (R 4.5.0)
- bit            4.6.0   2025-03-06 [1] CRAN (R 4.5.0)
- bit64          4.8.2   2026-05-19 [1] CRAN (R 4.5.2)
- cli            3.6.6   2026-04-09 [1] CRAN (R 4.5.2)
- crayon         1.5.3   2024-06-20 [1] CRAN (R 4.5.0)
- digest         0.6.39  2025-11-19 [1] CRAN (R 4.5.2)
- dplyr        * 1.2.1   2026-04-03 [1] CRAN (R 4.5.2)
- evaluate       1.0.5   2025-08-27 [1] CRAN (R 4.5.0)
- farver         2.1.2   2024-05-13 [1] CRAN (R 4.5.0)
- fastmap        1.2.0   2024-05-15 [1] CRAN (R 4.5.0)
- fs             2.1.0   2026-04-18 [1] CRAN (R 4.5.2)
- generics       0.1.4   2025-05-09 [1] CRAN (R 4.5.0)
- ggplot2      * 4.0.3   2026-04-22 [1] CRAN (R 4.5.2)
- glue           1.8.1   2026-04-17 [1] CRAN (R 4.5.2)
- gt           * 1.3.0   2026-01-22 [1] CRAN (R 4.5.2)
- gtable         0.3.6   2024-10-25 [1] CRAN (R 4.5.0)
- hms            1.1.4   2025-10-17 [1] CRAN (R 4.5.0)
- htmltools      0.5.9   2025-12-04 [1] CRAN (R 4.5.2)
- htmlwidgets    1.6.4   2023-12-06 [1] CRAN (R 4.5.0)
- jsonlite       2.0.0   2025-03-27 [1] CRAN (R 4.5.0)
- knitr          1.50    2025-03-16 [1] CRAN (R 4.5.0)
- lifecycle      1.0.5   2026-01-08 [1] CRAN (R 4.5.2)
- magrittr       2.0.5   2026-04-04 [1] CRAN (R 4.5.2)
- pillar         1.11.1  2025-09-17 [1] CRAN (R 4.5.0)
- pkgconfig      2.0.3   2019-09-22 [1] CRAN (R 4.5.0)
- R6             2.6.1   2025-02-15 [1] CRAN (R 4.5.0)
- RColorBrewer   1.1-3   2022-04-03 [1] CRAN (R 4.5.0)
- readr          2.1.5   2024-01-10 [1] CRAN (R 4.5.0)
- rlang          1.3.0   2026-07-05 [1] CRAN (R 4.5.2)
- rmarkdown      2.30    2025-09-28 [1] CRAN (R 4.5.0)
- S7             0.2.2   2026-04-22 [1] CRAN (R 4.5.2)
- sass           0.4.10  2025-04-11 [1] CRAN (R 4.5.0)
- scales         1.4.0   2025-04-24 [1] CRAN (R 4.5.0)
- sessioninfo    1.2.3   2025-02-05 [1] CRAN (R 4.5.0)
- tibble         3.3.1   2026-01-11 [1] CRAN (R 4.5.2)
- tidyselect     1.2.1   2024-03-11 [1] CRAN (R 4.5.0)
- tzdb           0.5.0   2025-03-15 [1] CRAN (R 4.5.0)
- vctrs          0.7.3   2026-04-11 [1] CRAN (R 4.5.2)
- vroom          1.6.6   2025-09-19 [1] CRAN (R 4.5.0)
- withr          3.0.3   2026-06-19 [1] CRAN (R 4.5.2)
- xfun           0.54    2025-10-30 [1] CRAN (R 4.5.0)
- xml2           1.4.1   2025-10-27 [1] CRAN (R 4.5.0)
- yaml           2.3.10  2024-07-26 [1] CRAN (R 4.5.0)
-
- [1] /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library
- * ── Packages attached to the search path.
-
-──────────────────────────────────────────────────────────────────────────────</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
+<p>The automated checks, unit tests, input checksums and software versions behind these results are on the <a href="./reproducibility.html">Reproducibility</a> page.</p>
 
 
 <!-- -->
@@ -2958,142 +1829,92 @@ Table&nbsp;4: Software versions and seed used to build the results.
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./reproducibility.html" class="pagination-link" aria-label="Reproducibility">
+        <span class="nav-page-text">Reproducibility</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Governance &amp; Audit"</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Where Will the Attacker Strike? Assumptions, limits and checks"</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/00_params.R"</span>); <span class="fu">source</span>(<span class="st">"R/01_utils.R"</span>); <span class="fu">source</span>(<span class="st">"R/90_theme.R"</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr); <span class="fu">library</span>(ggplot2); <span class="fu">library</span>(gt)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>diag <span class="ot">&lt;-</span> <span class="fu">read_result</span>(<span class="st">"diagnostics"</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>si <span class="ot">&lt;-</span> <span class="fu">read_result</span>(<span class="st">"session_info"</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(PROJECT_ROOT, <span class="st">"data"</span>, <span class="st">"assumptions_register.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>n_pass <span class="ot">&lt;-</span> <span class="fu">sum</span>(diag<span class="sc">$</span>result <span class="sc">==</span> <span class="st">"pass"</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>sens <span class="ot">&lt;-</span> <span class="fu">read_result</span>(<span class="st">"sensitivity"</span>)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>n_rob <span class="ot">&lt;-</span> <span class="fu">sum</span>(sens<span class="sc">$</span>best <span class="sc">==</span> <span class="st">"robust"</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>*All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative.*</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## How a board should use this</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>Use this analysis as a challenge to the budget, not as an allocation engine. The numbers are synthetic. What carries over to your own firm is the logic: attackers respond to what we defend, and the best plan is the one that still works when our read of the attacker is wrong.</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>A board can ask three things. Does our plan state who we think the attacker is? Has anyone tested the plan against a different attacker? What would we change if our threat intelligence were wrong by a third?</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Assumptions register</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-assumptions</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Assumptions behind the analysis, why each matters, how it could fail, and where it is tested."</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>reg <span class="sc">|&gt;</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">id =</span> <span class="st">"ID"</span>, <span class="at">assumption =</span> <span class="st">"Assumption"</span>, <span class="at">why_it_matters =</span> <span class="st">"Why it matters"</span>,</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>             <span class="at">how_it_could_fail =</span> <span class="st">"How it could fail"</span>, <span class="at">where_tested =</span> <span class="st">"Where tested"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"left"</span>)</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>**How to read the table.** Each row is something we assumed to build the model. The columns say why the assumption matters, how it could turn out wrong, and where this site tests it, if anywhere.</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>**What the table tells you.** Several assumptions are not tested here. These are the first places to look when applying the approach to real data, because a wrong assumption can reorder the strategies.</span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sensitivity</span></span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>We changed one assumption at a time and reran the full comparison. The robust strategy was best in <span class="in">`r n_rob`</span> of <span class="in">`r nrow(sens)`</span> cases, including a lateral-movement case where an identity or corporate IT breach spreads and costs more.</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-sensitivity</span></span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Expected loss if we misjudge the crew, with one assumption changed at a time."</span></span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>sens <span class="sc">|&gt;</span></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(assumption, setting,</span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>            <span class="at">best =</span> STRAT_LABELS[best],</span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>            robust_mean,</span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>            <span class="at">next_best =</span> <span class="fu">paste0</span>(STRAT_LABELS[next_best], <span class="st">" ("</span>, <span class="fu">fmt_m</span>(next_mean), <span class="st">")"</span>),</span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>            robust_p95, textbook_p95) <span class="sc">|&gt;</span></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">assumption =</span> <span class="st">"Assumption"</span>, <span class="at">setting =</span> <span class="st">"Setting"</span>, <span class="at">best =</span> <span class="st">"Best strategy"</span>,</span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>             <span class="at">robust_mean =</span> <span class="st">"Robust"</span>, <span class="at">next_best =</span> <span class="st">"Next best"</span>,</span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>             <span class="at">robust_p95 =</span> <span class="st">"Robust 1-in-20"</span>, <span class="at">textbook_p95 =</span> <span class="st">"Textbook 1-in-20"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_currency</span>(<span class="at">columns =</span> <span class="fu">c</span>(robust_mean, robust_p95, textbook_p95),</span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>               <span class="at">decimals =</span> <span class="dv">1</span>, <span class="at">pattern =</span> <span class="st">"{x}M"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"left"</span>, <span class="at">columns =</span> <span class="fu">c</span>(assumption, setting, best, next_best))</span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>**How to read the table.** Each row changes one assumption and reruns every strategy. Values are expected loss in $M when we misjudge the crew; the last two columns are the 1-in-20 bad case.</span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>**What the table tells you.** The ranking does not depend on these settings. Larger misjudgment raises every loss but robust still leads, and the textbook plan's bad case stays far above robust's.</span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limitations</span></span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>The model has no repeated play: one campaign, one decision. It has no deception or honeypots, which can change what the crew sees. It has one attacker type, so insiders and state actors are out of scope. Assets fail independently: a breach of identity or corporate IT does not spread to other systems, although real ransomware crews often move laterally. The sensitivity table tests a simple version of this. The budget is static, so it does not respond to new intelligence during the year.</span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>Natural follow-ons are repeated play, mixtures of attacker types, and the attack-graph Markov chain project.</span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>For a framework that tests any risk model, see <span class="co">[</span><span class="ot">Three Questions for Any Risk Model</span><span class="co">](https://patrick-lefler.com/rQuarto_three_questions_for_any_risk_model_2026-10-22/)</span>.</span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## Diagnostics</span></span>
-<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>All <span class="in">`r nrow(diag)`</span> automated checks ran when the results were built; <span class="in">`r n_pass`</span> passed.</span>
-<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-diagnostics</span></span>
-<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Automated checks run when the results were built."</span></span>
-<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>diag <span class="sc">|&gt;</span></span>
-<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">check =</span> <span class="st">"Check"</span>, <span class="at">result =</span> <span class="st">"Result"</span>, <span class="at">detail =</span> <span class="st">"Detail"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"left"</span>)</span>
-<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
-<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>**How to read the table.** Each row is a test of the calculations. "Pass" means the check met its standard. The detail column states what was checked.</span>
-<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>**What the table tells you.** The checks cover the solver, the robust optimizer, the budget, and the Monte Carlo draws.</span>
-<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-session</span></span>
-<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Software versions and seed used to build the results."</span></span>
-<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item =</span> <span class="fu">c</span>(<span class="st">"R"</span>, <span class="st">"Seed"</span>, <span class="fu">names</span>(si<span class="sc">$</span>packages)),</span>
-<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(si<span class="sc">$</span>r_version, <span class="fu">as.character</span>(si<span class="sc">$</span>seed), <span class="fu">unname</span>(si<span class="sc">$</span>packages))</span>
-<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"left"</span>)</span>
-<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
-<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>**How to read the table.** The first row is the R version, the second the random seed, and the rest are the software packages that matter for the results.</span>
-<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>**What the table tells you.** Anyone with these versions and seed can reproduce the numbers on this site exactly. A different seed gives slightly different Monte Carlo results.</span>
-<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>**Reproduce.** Code and data: <span class="co">[</span><span class="ot">GitHub repository</span><span class="co">](https://github.com/patrick-lefler/rQuarto_defender_attacker-game_theory)</span>. From the project root run <span class="in">`Rscript R/run_all.R`</span>, then <span class="in">`quarto render`</span>.</span>
-<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a><span class="fu">## Session Information</span></span>
-<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon=false collapse="true"}</span>
-<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Full R session information</span></span>
-<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: session-information</span></span>
-<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span>
-<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>:::</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Governance &amp; Audit"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Where Will the Attacker Strike? Assumptions and limits"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/00_params.R"</span>); <span class="fu">source</span>(<span class="st">"R/01_utils.R"</span>); <span class="fu">source</span>(<span class="st">"R/90_theme.R"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr); <span class="fu">library</span>(ggplot2); <span class="fu">library</span>(gt)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(PROJECT_ROOT, <span class="st">"data"</span>, <span class="st">"assumptions_register.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>sens <span class="ot">&lt;-</span> <span class="fu">read_result</span>(<span class="st">"sensitivity"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>n_rob <span class="ot">&lt;-</span> <span class="fu">sum</span>(sens<span class="sc">$</span>best <span class="sc">==</span> <span class="st">"robust"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>*All money is in $M. Losses are expected loss per targeted ransomware campaign, and the model assumes one campaign per year. All values are illustrative.*</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## How a board should use this</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>Use this analysis as a challenge to the budget, not as an allocation engine. The numbers are synthetic. What carries over to your own firm is the logic: attackers respond to what we defend, and the best plan is the one that still works when our read of the attacker is wrong.</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>A board can ask three things. Does our plan state who we think the attacker is? Has anyone tested the plan against a different attacker? What would we change if our threat intelligence were wrong by a third?</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## Assumptions register</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-assumptions</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Assumptions behind the analysis, why each matters, how it could fail, and where it is tested."</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>reg <span class="sc">|&gt;</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">id =</span> <span class="st">"ID"</span>, <span class="at">assumption =</span> <span class="st">"Assumption"</span>, <span class="at">why_it_matters =</span> <span class="st">"Why it matters"</span>,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">how_it_could_fail =</span> <span class="st">"How it could fail"</span>, <span class="at">where_tested =</span> <span class="st">"Where tested"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"left"</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>**How to read the table.** Each row is something we assumed to build the model. The columns say why the assumption matters, how it could turn out wrong, and where this site tests it, if anywhere.</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>**What the table tells you.** Several assumptions are not tested here. These are the first places to look when applying the approach to real data, because a wrong assumption can reorder the strategies.</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sensitivity</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>We changed one assumption at a time and reran the full comparison. The robust strategy was best in <span class="in">`r n_rob`</span> of <span class="in">`r nrow(sens)`</span> cases, including a lateral-movement case where an identity or corporate IT breach spreads and costs more.</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-sensitivity</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Expected loss if we misjudge the crew, with one assumption changed at a time."</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>sens <span class="sc">|&gt;</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(assumption, setting,</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>            <span class="at">best =</span> STRAT_LABELS[best],</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>            robust_mean,</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>            <span class="at">next_best =</span> <span class="fu">paste0</span>(STRAT_LABELS[next_best], <span class="st">" ("</span>, <span class="fu">fmt_m</span>(next_mean), <span class="st">")"</span>),</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>            robust_p95, textbook_p95) <span class="sc">|&gt;</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">assumption =</span> <span class="st">"Assumption"</span>, <span class="at">setting =</span> <span class="st">"Setting"</span>, <span class="at">best =</span> <span class="st">"Best strategy"</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>             <span class="at">robust_mean =</span> <span class="st">"Robust"</span>, <span class="at">next_best =</span> <span class="st">"Next best"</span>,</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>             <span class="at">robust_p95 =</span> <span class="st">"Robust 1-in-20"</span>, <span class="at">textbook_p95 =</span> <span class="st">"Textbook 1-in-20"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_currency</span>(<span class="at">columns =</span> <span class="fu">c</span>(robust_mean, robust_p95, textbook_p95),</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>               <span class="at">decimals =</span> <span class="dv">1</span>, <span class="at">pattern =</span> <span class="st">"{x}M"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt_se</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"left"</span>, <span class="at">columns =</span> <span class="fu">c</span>(assumption, setting, best, next_best))</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>::: {.reader-note}</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>**How to read the table.** Each row changes one assumption and reruns every strategy. Values are expected loss in $M when we misjudge the crew; the last two columns are the 1-in-20 bad case.</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>**What the table tells you.** The ranking does not depend on these settings. Larger misjudgment raises every loss but robust still leads, and the textbook plan's bad case stays far above robust's.</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limitations</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>The model has no repeated play: one campaign, one decision. It has no deception or honeypots, which can change what the crew sees. It has one attacker type, so insiders and state actors are out of scope. Assets fail independently: a breach of identity or corporate IT does not spread to other systems, although real ransomware crews often move laterally. The sensitivity table tests a simple version of this. The budget is static, so it does not respond to new intelligence during the year.</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>Natural follow-ons are repeated play, mixtures of attacker types, and the attack-graph Markov chain project.</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>For a framework that tests any risk model, see <span class="co">[</span><span class="ot">Three Questions for Any Risk Model</span><span class="co">](https://patrick-lefler.com/rQuarto_three_questions_for_any_risk_model_2026-10-22/)</span>.</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>The automated checks, unit tests, input checksums and software versions behind these results are on the <span class="co">[</span><span class="ot">Reproducibility</span><span class="co">](reproducibility.qmd)</span> page.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

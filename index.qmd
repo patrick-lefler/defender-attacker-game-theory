@@ -105,4 +105,5 @@ ggplot(d) +
 - [**The Game:**](01-the-game.qmd) a two-asset example shows why defending the biggest asset can fail.
 - [**Allocation:**](02-allocation.qmd) the firm, the six assets and four ways to split the budget.
 - [**Robustness:**](03-robustness.qmd) what happens when we misjudge the crew, and the robust strategy.
-- [**Governance:**](04-governance.qmd) the assumptions, the limits and the automated checks.
+- [**Governance:**](04-governance.qmd) the assumptions, the sensitivity tests and the limits.
+- [**Reproducibility:**](reproducibility.qmd) how to rerun the analysis, with the automated checks and software versions.

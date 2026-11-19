@@ -6,7 +6,7 @@ Game-theoretic allocation of a security budget: a 500-person fintech firm splits
 
 All values are synthetic and illustrative. Not investment or security advice.
 
-Medium rQuarto project (5 rendered pages). Specification: `Defender-Attacker-Game-Development-Plan.md`. Python reference: `reference_prototype.py` (used only to generate the expected values in the plan).
+Large rQuarto project (6 rendered pages: five analysis pages plus Reproducibility). Specification: `Defender-Attacker-Game-Development-Plan.md`. Python reference: `reference_prototype.py` (used only to generate the expected values in the plan).
 
 ## Key results (base budget $9M)
 
@@ -78,7 +78,7 @@ Sensitivity settings tested in `R/35_sensitivity.R`: covered share 5% and 20%; c
 
 ## Diagnostics
 
-`R/run_all.R` runs seven checks, all reported in the Governance page's diagnostics table:
+`R/run_all.R` runs seven checks, all reported in the diagnostics table on the Reproducibility page:
 
 1. SSE LPs solved without solver error
 2. Best-response consistency
@@ -122,3 +122,4 @@ A word-count check (4,000-word prose cap) also runs and can fail the build, but 
   - American spelling throughout.
   - Reproduce instructions added to the Governance page.
   - GitHub Pages enabled.
+- 2026-11-18: Reproducibility page added (`reproducibility.qmd`): quick start, pipeline, checksums, parameters and seeds, unit-test results rendered on the page, diagnostics, caching, licenses and session information. Diagnostics, build versions and session info moved there from the Governance page. `sessioninfo` added to `renv.lock`.

@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ca758389ed1120b27d1d2c73de755b30.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b45a8054ba6499b4e4358f2af7238a19.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -156,6 +156,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./04-governance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Governance</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reproducibility</span></a>
   </div>
 </li>
     </ul>
@@ -266,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-hero" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Paired horizontal bars for five strategies, ordered by loss under misjudgment. Robust has the lowest misjudged loss at 9.0 million dollars with a 1-in-20 bad case of 14.9 million. The textbook equilibrium has the lowest loss if read perfectly, 4.9 million, but the highest under misjudgment, 15.3 million, with a 1-in-20 bad case of 46.5 million.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-hero-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-hero-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Expected loss per campaign by strategy, if we read the crew perfectly and if we misjudge it. The line runs to the 1-in-20 bad case."><img src="index_files/figure-html/fig-hero-1.png" class="img-fluid figure-img" alt="Paired horizontal bars for five strategies, ordered by loss under misjudgment. Robust has the lowest misjudged loss at 9.0 million dollars with a 1-in-20 bad case of 14.9 million. The textbook equilibrium has the lowest loss if read perfectly, 4.9 million, but the highest under misjudgment, 15.3 million, with a 1-in-20 bad case of 46.5 million." width="768"></a>
+<a href="index_files/figure-html/fig-hero-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Expected loss per campaign by strategy, if we read the crew perfectly and if we misjudge it. The line runs to the 1-in-20 bad case."><img src="index_files/figure-html/fig-hero-1.png" class="img-fluid figure-img" alt="Paired horizontal bars for five strategies, ordered by loss under misjudgment. Robust has the lowest misjudged loss at 9.0 million dollars with a 1-in-20 bad case of 14.9 million. The textbook equilibrium has the lowest loss if read perfectly, 4.9 million, but the highest under misjudgment, 15.3 million, with a 1-in-20 bad case of 46.5 million." width="960"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hero-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Expected loss per campaign by strategy, if we read the crew perfectly and if we misjudge it. The line runs to the 1-in-20 bad case.
@@ -304,7 +310,8 @@ Figure&nbsp;1: Expected loss per campaign by strategy, if we read the crew perfe
 <li><a href="./01-the-game.html"><strong>The Game:</strong></a> a two-asset example shows why defending the biggest asset can fail.</li>
 <li><a href="./02-allocation.html"><strong>Allocation:</strong></a> the firm, the six assets and four ways to split the budget.</li>
 <li><a href="./03-robustness.html"><strong>Robustness:</strong></a> what happens when we misjudge the crew, and the robust strategy.</li>
-<li><a href="./04-governance.html"><strong>Governance:</strong></a> the assumptions, the limits and the automated checks.</li>
+<li><a href="./04-governance.html"><strong>Governance:</strong></a> the assumptions, the sensitivity tests and the limits.</li>
+<li><a href="./reproducibility.html"><strong>Reproducibility:</strong></a> how to rerun the analysis, with the automated checks and software versions.</li>
 </ul>
 
 
@@ -880,7 +887,8 @@ Figure&nbsp;1: Expected loss per campaign by strategy, if we read the crew perfe
 <span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**The Game:**</span><span class="co">](01-the-game.qmd)</span> a two-asset example shows why defending the biggest asset can fail.</span>
 <span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**Allocation:**</span><span class="co">](02-allocation.qmd)</span> the firm, the six assets and four ways to split the budget.</span>
 <span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**Robustness:**</span><span class="co">](03-robustness.qmd)</span> what happens when we misjudge the crew, and the robust strategy.</span>
-<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**Governance:**</span><span class="co">](04-governance.qmd)</span> the assumptions, the limits and the automated checks.</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**Governance:**</span><span class="co">](04-governance.qmd)</span> the assumptions, the sensitivity tests and the limits.</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**Reproducibility:**</span><span class="co">](reproducibility.qmd)</span> how to rerun the analysis, with the automated checks and software versions.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
