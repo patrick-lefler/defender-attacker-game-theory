@@ -9,28 +9,49 @@ knitr:
 ```{r load}
 #| include: false
 source("R/00_params.R"); source("R/01_utils.R"); source("R/90_theme.R")
+source("R/repro_env.R")
 library(dplyr); library(ggplot2); library(gt)
 diag <- read_result("diagnostics")
 si <- read_result("session_info")
 n_pass <- sum(diag$result == "pass")
 params <- yaml::read_yaml(file.path(PROJECT_ROOT, "params.yaml"))
+frontier <- read_result("frontier")$frontier
+loss_rat <- \(s) frontier$loss_rational[frontier$budget == BUDGET_BASE & frontier$strategy == s]
 ```
 
 Every number on this site comes from synthetic inputs in `params.yaml` and `data/`, and from results computed by the scripts in `R/`. Nothing is downloaded, and every random draw is seeded, so running the same commit with the same package versions gives the same results. The pages never solve anything themselves: they read cached results from `data/results/`. This page explains how to rebuild those results, lists the inputs with their checksums, shows the tests and checks, and records the software environment.
 
 ## Quick start {#quick-start}
 
-1.  Clone the [GitHub repository](https://github.com/patrick-lefler/defender-attacker-game-theory) and open the project folder in RStudio or Positron.
-2.  Restore the packages with `renv::restore()` (see [Software environment](#environment)). You need R 4.3 or later and Quarto 1.5 or later.
-3.  From a terminal in the project root, rebuild the results, run the tests and render the site:
+The code and data are in the GitHub repository [patrick-lefler/defender-attacker-game-theory](https://github.com/patrick-lefler/defender-attacker-game-theory). You need R 4.3 or later and Quarto 1.5 or later. To rebuild the results, run the tests and render the site from a clean copy:
 
 ``` bash
+git clone https://github.com/patrick-lefler/defender-attacker-game-theory
+cd defender-attacker-game-theory
+Rscript -e 'renv::restore()'   # once: install the package versions pinned in renv.lock
 Rscript R/run_all.R
 Rscript -e 'testthat::test_dir("tests/testthat")'
 quarto render
 ```
 
 The rendered site is written to `docs/`. Run `R/run_all.R` with `Rscript` from a terminal, not with `source()` in an R console: it ends with `quit()`, which would close your session. It exits with an error status if any diagnostic fails.
+
+## Environment {#environment}
+
+```{r}
+#| label: tbl-env
+#| tbl-cap: "Software used to render this page."
+repro_env_table(packages = c("highs", "nloptr", "dplyr", "gt", "testthat")) |>
+  gt() |>
+  gt_se() |>
+  cols_align(align = "left")
+```
+
+::: {.reader-note}
+**How to read the table.** Each row is one piece of software this page was rendered with and its version: R, the operating system, Quarto, and the packages the results depend on most (the two solvers, the data tools, the table package and the test framework). The "Packages" row says whether the installed R packages match the versions pinned in `renv.lock`.
+
+**What the table tells you.** If your versions match these and the packages are in sync, rebuilding the project should give the same numbers. If they differ, small differences in the results may come from the software rather than the analysis. The versions that built the cached results are recorded separately under [Caching](#caching).
+:::
 
 ## Pipeline {#pipeline}
 
@@ -121,6 +142,16 @@ tibble(
 **What the table tells you.** To test a different assumption, change its value in `params.yaml` and rerun the pipeline; no code needs editing. The seed fixes every random draw, so two people with the same file get the same numbers. The [Governance](04-governance.qmd#sensitivity) page shows how much the ranking moves when the most important settings change.
 :::
 
+::: {.callout-note icon="false" collapse="true"}
+## params.yaml
+
+```{r params-yaml}
+#| echo: false
+#| results: asis
+cat("```yaml\n", paste(readLines(file.path(PROJECT_ROOT, "params.yaml")), collapse = "\n"), "\n```\n", sep = "")
+```
+:::
+
 ## Tests {#tests}
 
 Two layers of checks guard the results. Unit tests in `tests/testthat/` check the core functions against reference values from an independent Python prototype (`reference_prototype.py`). They run again each time this page is executed, and the table below shows the results.
@@ -166,7 +197,7 @@ diag |>
 ::: {.reader-note}
 **How to read the table.** Each row is a check on the finished results rather than on a single function. "Pass" means the check met its standard. The detail column states what was checked and, where useful, by how much it passed, such as the largest gradient error or the change in average loss under a new seed.
 
-**What the table tells you.** The solvers converged, every strategy respects the budget, the optimizer's slope calculation is correct, and the Monte Carlo results barely move when the random draws change: average losses shift by at most a few percent and the ranking holds. The last row confirms that the one budget where robust is not cheapest reflects the misjudgment test, not an optimizer failure.
+**What the table tells you.** The solvers converged, every strategy respects the budget, the optimizer's slope calculation is correct, and the Monte Carlo results barely move when the random draws change: average losses shift by at most a few percent and the ranking holds. The last row explains the one exception on the budget frontier: at $5.5M, the risk-ranked plan has a slightly lower average loss than robust when we misjudge the crew. Robust still gives the lowest loss under its own noisy-crew model at every budget, so the optimizer found the right answer; the exception comes from the misjudgment test, not from a solver failure.
 :::
 
 ## Caching {#caching}
@@ -194,23 +225,85 @@ tibble(
 **What the table tells you.** Anyone using these versions and this seed should reproduce every number on the site exactly. A different seed changes the Monte Carlo results slightly; the stability diagnostic above shows by how much. A different solver version could change results in the last decimal places.
 :::
 
+## Known limitations {#limitations}
+
+### Limits of reproducibility {#repro-limits}
+
+-   Bit-for-bit equality is expected only on the same platform and package versions. Floating-point and BLAS differences across machines can change low-order digits. The optimizers (`highs` for the linear programs, `nloptr` for the robust strategy) can stop at slightly different points on different machines or versions, which can move results in the last decimal places.
+-   Nothing is downloaded during a build, so the analysis does not depend on any external data source. Rebuilding does depend on the pinned package versions staying available from CRAN, through `renv::restore()`.
+-   The unit-test reference values come from `reference_prototype.py`, which needs Python to rerun. The R tests use the stored values and do not call Python.
+-   Quarto versions affect rendering, not the numbers.
+
+### Model limitations {#sec-limitations}
+
+The model is a deliberately simple stylized game. Its main limitations, most of which are also listed in the [assumptions register](04-governance.qmd#assumptions-register):
+
+1.  **No repeated play.** One campaign, one decision. Real crews return, learn from failed attempts and share what they find. Loss figures are per campaign and the model assumes one campaign per year (A1).
+2.  **One attacker type.** Every strategy is built around one ransomware crew's payoffs. Insiders and state actors want different assets and are out of scope (A2).
+3.  **No deception.** The model has no honeypots or decoys, which can change what the crew sees and so where it attacks. The crew is assumed to see our coverage before choosing a target (A3); the noisy-crew sweep on the [Robustness](03-robustness.qmd) page tests this only in part.
+4.  **Assets fail independently.** A breach of identity or corporate IT does not spread to other systems, although real ransomware crews often move laterally (A11). The sensitivity table on the [Governance](04-governance.qmd#sensitivity) page tests a simple version of this by raising those two assets' losses.
+5.  **Static budget and simple controls.** The budget does not respond to new intelligence during the year. Coverage costs rise in a straight line (A4) and coverage is treated as the probability an attack is stopped, with controls failing independently (A5). Neither assumption is tested.
+6.  **Synthetic calibration.** Every asset value, cost and setting is illustrative (A8). The misjudgment test stresses only the crew's payoffs, not our own loss estimates or costs.
+
+Natural follow-ons are repeated play, mixtures of attacker types, and the attack-graph Markov chain project.
+
+#### What would change the conclusions
+
+| Change | Likely effect | Tested here? |
+|:-----------------------|:-----------------------------------------|:-----------------------|
+| We know the crew's payoffs exactly | The textbook plan wins: at the base budget it loses `r fmt_m(loss_rat("textbook"))` against a perfectly predicted crew, against `r fmt_m(loss_rat("robust"))` for robust. Robust's advantage comes entirely from protecting against misjudgment. | Yes, frontier and two-asset example |
+| Misjudgment larger than tested, or biased in one direction | Every strategy loses more. Robust led across sigma 0.20 to 0.50, but a consistent bias (for example always underrating one asset) was not simulated. | Partly (sigma 0.20 to 0.50, unbiased) |
+| Several attacker types, or repeated campaigns | Could reorder the strategies, because the best plan against a mixture need not be the best against any single crew. | No |
+| Strong lateral movement | Raises the value of covering identity and corporate IT. Robust still led in the one scenario tested. | One scenario |
+| Diminishing returns or correlated control failures | Changes how much each extra dollar of coverage buys, and so the shape of every allocation. | No |
+
+::: {.reader-note}
+**How to read the table.** Each row is a change to the world the model assumes. The middle column says what that change would probably do to the comparison of strategies; the last column says whether this site tests it.
+
+**What the table tells you.** The headline result, that robust beats the alternatives when we misjudge the crew, holds for every change the site tests. The first row is the trade-off: robust gives up some performance against a perfectly predicted crew in exchange for much smaller losses when the prediction is wrong. The untested rows are where the conclusion is least secure.
+:::
+
+#### What real data would replace
+
+| Assumption | Real data that would replace it |
+|:-----------------------|:-----------------------------------------|
+| Our loss if each asset is hit (`L` in `data/assets.csv`) | The firm's own business-impact and scenario analysis, cross-checked against incident and insurance-claim history |
+| The crew's value of each asset (`V`) | Threat intelligence on which systems ransomware crews target and what they extract or demand from them |
+| Coverage cost and cap (`k`, `c_max`) | Control costs from the security budget and vendor quotes, and the realistic maximum effectiveness of each control set |
+| Coverage as the probability an attack is stopped (A5) | Control-effectiveness evidence from red-team exercises, penetration tests and past incidents |
+| Size of misjudgment (`misest_sigma`, A10) | A record of how well past threat-intelligence forecasts matched the attacks that followed |
+| Loss when an attack is stopped (`def_covered_share`, A6) | Response and recovery costs of contained incidents |
+| One campaign per year (A1) | The firm's own attack frequency and industry incident data |
+
+::: {.reader-note}
+**How to read the table.** Each row pairs a synthetic input or assumption with the kind of evidence a real firm would use in its place. Column names in parentheses refer to `data/assets.csv` and `params.yaml`.
+
+**What the table tells you.** The method carries over to a real firm, but the numbers do not. The crew's values and the size of our misjudgment matter most here, because they decide which asset the crew prefers and how much robustness is worth. They are also the hardest inputs to estimate.
+:::
+
+#### How to use these results
+
+Use the analysis as a challenge to a security budget, not as an allocation engine. What carries over is the logic: attackers respond to what we defend, and a plan should be tested against an attacker who differs from the one we expect. Do not use the dollar figures, coverage levels or asset rankings as estimates for any real firm; they come from illustrative inputs.
+
 ## Licenses {#licenses}
 
-The code on this site is released under the [MIT License](license.qmd). There are no third-party data: every input is synthetic and was written for this project, so the same license covers it.
+The code on this site is released under the [MIT License](license.qmd). There are no third-party data: every input is synthetic and was written for this project, so the same license covers it. Three packages the results depend on carry copyleft licenses, as stated in each package's DESCRIPTION file; using them to produce results does not change the license of this project's code.
 
 | Source | Terms |
 |:----------------------|:--------------------------------------------------------|
 | Code in `R/` and `tests/` | [MIT License](license.qmd) |
 | Synthetic inputs (`params.yaml`, `data/`) | [MIT License](license.qmd) |
+| [`highs`](https://cran.r-project.org/package=highs) (linear-program solver) | GPL (>= 2) |
+| [`nloptr`](https://cran.r-project.org/package=nloptr) (robust optimizer) | LGPL (>= 3) |
+| [`ggrepel`](https://cran.r-project.org/package=ggrepel) (plot labels) | GPL-3 |
 
-## Software environment {#environment}
+## Session information {#session-info}
 
-The site was built with R and Quarto. The analysis loads `dplyr`, `ggplot2` and `gt`, and also calls `ggrepel`, `highs`, `nloptr`, `purrr`, `readr`, `scales`, `sessioninfo`, `testthat`, `tibble`, `tidyr`, `tidyselect` and `yaml`. Package versions are pinned in `renv.lock`; run `renv::restore()` to install them.
+The site was built with R and Quarto. The analysis loads `dplyr`, `ggplot2` and `gt`, and also calls `ggrepel`, `highs`, `nloptr`, `purrr`, `readr`, `renv`, `scales`, `sessioninfo`, `testthat`, `tibble`, `tidyr`, `tidyselect` and `yaml`. Package versions are pinned in `renv.lock`; run `renv::restore()` to install them.
 
-::: {.callout-note icon = false collapse="true"}
+::: {.callout-note icon="false" collapse="true"}
 ## Full R session information
-```{r}
-#| label: session-information
+```{r session-information}
 #| echo: false
 sessioninfo::session_info()
 ```
