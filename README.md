@@ -123,3 +123,10 @@ A word-count check (4,000-word prose cap) also runs and can fail the build, but 
   - Reproduce instructions added to the Governance page.
   - GitHub Pages enabled.
 - 2026-11-18: Reproducibility page added (`reproducibility.qmd`): quick start, pipeline, checksums, parameters and seeds, unit-test results rendered on the page, diagnostics, caching, licenses and session information. Diagnostics, build versions and session info moved there from the Governance page. `sessioninfo` added to `renv.lock`.
+- 2026-11-20: Reproducibility page brought up to the current template:
+  - Sections reordered to the template order; Quick start now includes `git clone` and `renv::restore()`.
+  - Environment table added (`R/repro_env.R`, copied from the template); session information moved to `#session-info`.
+  - `params.yaml` shown in a collapsed callout.
+  - Known limitations added: limits of reproducibility, and model limitations (`#sec-limitations`) moved from the Governance page and expanded with what would change the conclusions, what real data would replace each assumption, and how to use the results. The Governance page now links there.
+  - Licenses table lists `highs` (GPL >= 2), `nloptr` (LGPL >= 3) and `ggrepel` (GPL-3).
+  - Diagnostics reader note reworded to name the $5.5M frontier exception.

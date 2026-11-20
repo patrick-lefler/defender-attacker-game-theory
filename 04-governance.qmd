@@ -70,9 +70,7 @@ sens |>
 
 ## Limitations
 
-The model has no repeated play: one campaign, one decision. It has no deception or honeypots, which can change what the crew sees. It has one attacker type, so insiders and state actors are out of scope. Assets fail independently: a breach of identity or corporate IT does not spread to other systems, although real ransomware crews often move laterally. The sensitivity table tests a simple version of this. The budget is static, so it does not respond to new intelligence during the year.
-
-Natural follow-ons are repeated play, mixtures of attacker types, and the attack-graph Markov chain project.
+The model's limitations, what would change its conclusions and what real data would replace each assumption are on the [Reproducibility](reproducibility.qmd#sec-limitations) page.
 
 ## Further reading
 
